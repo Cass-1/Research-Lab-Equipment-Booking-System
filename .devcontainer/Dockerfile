@@ -13,6 +13,9 @@ RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 # Ensure the "vscode" user owns the workspace directory
 RUN mkdir -p /workspaces && chown vscode:vscode /workspaces
 
+# Install pnpm
+RUN npm install -g pnpm
+
 # Switch to the "vscode" user
 USER vscode
 
