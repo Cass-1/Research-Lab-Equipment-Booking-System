@@ -1,7 +1,9 @@
 {
   "name": "React + Bun Dev Container",
   "build": { "dockerfile": "Dockerfile" },
-  "forwardPorts": [3000, 3001, 5432],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/vscode/${localWorkspaceFolderBasename},type=bind",
+  "workspaceFolder": "/vscode/${localWorkspaceFolderBasename}",
+  "forwardPorts": [3000, 3001, 5432, 4000],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -11,9 +13,12 @@
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "bash",
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
+        "terminal.integrated.cwd": "/vscode/${localWorkspaceFolderBasename}",
+        "git.identity": null,
+        "git.user.name": null,
+        "git.user.email": null
       }
     }
-  },
-  "postCreateCommand": "sudo chown -R vscode:vscode /workspaces && git config --global --unset user.name && git config --global --unset user.email"
+  }
 }
