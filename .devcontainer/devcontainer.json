@@ -1,18 +1,19 @@
 {
-    "name": "Web App Dev Container",
-    "dockerComposeFile": "../docker-compose.yml",
-    "service": "client", // Default service to attach to
-    "workspaceFolder": "/app",
-    "shutdownAction": "stopCompose",
-    "forwardPorts": [3000, 3001, 5432],
-    "postCreateCommand": "bun install && npm install",
-    "customizations": {
-      "vscode": {
-        "extensions": [
-          "dbaeumer.vscode-eslint",
-          "esbenp.prettier-vscode",
-          "bradlc.vscode-tailwindcss"
-        ]
+  "name": "React + Bun Dev Container",
+  "build": { "dockerfile": "Dockerfile" },
+  "forwardPorts": [3000, 3001, 5432],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true
       }
     }
-  }
+  },
+  "postCreateCommand": "sudo chown -R vscode:vscode /workspaces && git config --global --unset user.name && git config --global --unset user.email"
+}
