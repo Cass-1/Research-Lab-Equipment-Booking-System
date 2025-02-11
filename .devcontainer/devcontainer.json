@@ -1,0 +1,18 @@
+{
+    "name": "Web App Dev Container",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "client", // Default service to attach to
+    "workspaceFolder": "/app",
+    "shutdownAction": "stopCompose",
+    "forwardPorts": [3000, 3001, 5432],
+    "postCreateCommand": "bun install && npm install",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "dbaeumer.vscode-eslint",
+          "esbenp.prettier-vscode",
+          "bradlc.vscode-tailwindcss"
+        ]
+      }
+    }
+  }
