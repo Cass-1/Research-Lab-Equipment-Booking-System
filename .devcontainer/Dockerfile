@@ -21,4 +21,4 @@ ENV BUN_INSTALL="/home/node/.bun"
 ENV PATH="$BUN_INSTALL/bin:$PATH"
 
 # Default command
-CMD ["bash"]rchtime
+CMD ["bash"]
