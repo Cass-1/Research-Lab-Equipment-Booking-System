@@ -7,18 +7,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install tools as root
-RUN npm install -g pnpm
-
 # Switch to the "vscode" user
 USER node
-
-# Install Bun for the vscode user
-RUN curl -fsSL https://bun.sh/install | bash
-
-# Add Bun to PATH
-ENV BUN_INSTALL="/home/node/.bun"
-ENV PATH="$BUN_INSTALL/bin:$PATH"
 
 # Default command
 CMD ["bash"]
