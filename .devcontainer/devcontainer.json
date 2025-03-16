@@ -4,6 +4,7 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/home/node/${localWorkspaceFolderBasename},type=bind",
   "workspaceFolder": "/home/node/${localWorkspaceFolderBasename}",
   "forwardPorts": [3000, 3001, 5432, 4000],
+  "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
       "extensions": [
