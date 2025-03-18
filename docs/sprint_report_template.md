@@ -11,7 +11,7 @@ Video Link:
  * Database integrated with deployment and develompment (Neon PostGress)
 
 ## Work Summary (Developer Facing)
-There was a lot of learning this sprint. Cass had never used HTML, CSS, or React. So they spent a bunch of time learning that. Additionally, neither of us had used Next.js before so we both had to spend time learning the framework. We also setup a webpage with authentication and Aayush setup our database schema on Neon. We also created a Vercel account so that we could deploy our webapp.
+There was a lot of learning this sprint. Cass had never used HTML, CSS, or React. So they spent a bunch of time learning that. Additionally, neither of us had used Next.js before so we both had to spend time learning the framework. We also setup a webpage with authentication and Aayush setup our database schema on Neon. We also created a Vercel account so that we could deploy our webapp. We also did some figma desings.
 
 ## Unfinished Work
 We still have some learning to do. Cass needs some more time to get comfortable with CSS (specifically Tailwind) and we both need more time getting used to the Next.js way of handling server side components. Additionally, Cass still needs some more time to get used to React state. We also need to implement authorization to prevent certain users from accessing certain webpages. There is also a bug where authentication only works on localhost and not in the development environment.
@@ -22,10 +22,17 @@ Here are links to the issues that we completed in this sprint:
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/38
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/37
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/34
+ * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/32
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/30
+ * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/28
+ * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/27
+ * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/26
+ * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/25
+ * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/24
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/23
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/22
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/21
+ * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/20
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/14
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/9
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/7
