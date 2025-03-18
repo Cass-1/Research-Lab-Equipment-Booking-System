@@ -13,7 +13,7 @@ export async function GET() {
         const result = await client.query('SELECT * from users;');
         client.release();
         return Response.json(result.rows);
-    } catch (error: any) {
+    } catch (error) {
         return Response.json({ error: error.message }, { status: 500 });
     } finally {
         await pool.end();
