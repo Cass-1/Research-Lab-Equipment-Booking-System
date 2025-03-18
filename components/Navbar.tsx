@@ -39,8 +39,9 @@ export default async function Navbar() {
                   "use server";
                   await signIn("github", {redirectTo: "/"});
                 }}
+                className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
               >
-                <button className="cursor-pointer hover:text-orange-600" type="submit">Log In</button>
+                <button type="submit">Log In</button>
               </form>
             </>
           )}
