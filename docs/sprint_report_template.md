@@ -96,6 +96,8 @@ Here's what went well:
  
 Here's what we'd like to improve:
   * We would like to get to more coding and adding new features now that we have actually learned the framework and the languages used
+  * More co-development on frontend
+  * Cleaner use of TailwindCSS
   
 Here are changes we plan to implement in the next sprint:
    * Having proper landing pages for each user and display all the equipment using cards
