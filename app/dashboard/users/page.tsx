@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 export default function TestPage() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<unknown[]>([]);
 
   useEffect(() => {
     fetch('/api/test')
