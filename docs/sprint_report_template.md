@@ -90,16 +90,15 @@ Please review the following code files, which were actively developed during thi
  
 ## Retrospective Summary
 Here's what went well:
-  * Item 1
-  * Item 2
-  * Item x
+  * Getting used to the new technology went pretty well especially because so much of the technology was new to us
+  * Getting deployment almost fully working with authentication and a database
+  * Getting a basic webpage functional
  
 Here's what we'd like to improve:
-   * Item 1
-   * Item 2
-   * Item x
+  * We would like to get to more coding and adding new features now that we have actually learned the framework and the languages used
   
 Here are changes we plan to implement in the next sprint:
-   * Item 1
-   * Item 2
-   * Item x
+   * Having proper landing pages for each user and display all the equipment using cards
+   * allow users to select equipment and add/remove equipment
+   * Using a react component library to reduce the time spent making stuff look nice and allowing for a standard look in the application
+   * have username and password authentication rather than just GitHub OAuth
