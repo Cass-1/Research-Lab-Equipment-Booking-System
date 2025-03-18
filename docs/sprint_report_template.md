@@ -1,15 +1,20 @@
 # Sprint x Report 
 Video Link: 
 ## What's New (User Facing)
- * Feature 1 or Bug Fix 1
- * Feature 2 or Bug Fix 2
- * Feature n or Bug Fix n
+ * Website landing page
+ * Website login page
+ * Dashboard page with navatation
+ * Sign out option
+ * Authentication using GitHub
+ * Have to login before accessing other pages
+ * Deployment using vercel
+ * Database integrated with deployment and develompment (Neon PostGress)
 
 ## Work Summary (Developer Facing)
-Provide a one paragraph synposis of what your team accomplished this sprint. Don't repeat the "What's New" list of features. Instead, help the instructor understand how you went about the work described there, any barriers you overcame, and any significant learnings for your team.
+There was a lot of learning this sprint. Cass had never used HTML, CSS, or React. So they spent a bunch of time learning that. Additionally, neither of us had used Next.js before so we both had to spend time learning the framework. We also setup a webpage with authentication and Aayush setup our database schema on Neon. We also created a Vercel account so that we could deploy our webapp.
 
 ## Unfinished Work
-If applicable, explain the work you did not finish in this sprint. For issues/user stories in the current sprint that have not been closed, (a) any progress toward completion of the issues has been clearly tracked (by checking the checkboxes of  acceptance criteria), (b) a comment has been added to the issue to explain why the issue could not be completed (e.g., "we ran out of time" or "we did not anticipate it would be so much work"), and (c) the issue is added to a subsequent sprint, so that it can be addressed later.
+We still have some learning to do. Cass needs some more time to get comfortable with CSS (specifically Tailwind) and we both need more time getting used to the Next.js way of handling server side components. Additionally, Cass still needs some more time to get used to React state. We also need to implement authorization to prevent certain users from accessing certain webpages. There is also a bug where authentication only works on localhost and not in the development environment.
 
 ## Completed Issues/User Stories
 Here are links to the issues that we completed in this sprint:
@@ -27,14 +32,6 @@ Here are links to the issues that we completed in this sprint:
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/3
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/2
  * https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/1
-
- Desirables (Remove this section when you save the file):
-  * Each issue should be assigned to a milestone
-  * Each completed issue should be assigned to a pull request
-  * Each completed pull request should include a link to a "Before and After" video
-  * All team members who contributed to the issue should be assigned to it on GitHub
-  * Each issue should be assigned story points using a label
-  * Story points contribution of each team member should be indicated in a comment
  
  ## Incomplete Issues/User Stories
  Here are links to issues we worked on but did not complete in this sprint:
