@@ -1,19 +1,11 @@
-'use client';
-import { useEffect, useState } from 'react';
+import client from '@/app/_lib/db';
 
-export default function TestPage() {
-  const [data, setData] = useState<unknown[]>([]);
-
-  useEffect(() => {
-    fetch('/api/test')
-      .then(res => res.json())
-      .then(setData);
-  }, []);
-
+export default async function TestPage() {
+  const users = (await client!.query('SELECT * from users;')).rows;
   return (
     <div>
       <h1>Database Test</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <pre>{JSON.stringify(users, null, 2)}</pre>
     </div>
   );
 }
