@@ -1,21 +1,50 @@
-import type { NextAuthConfig } from 'next-auth';
-import GitHub from 'next-auth/providers/github';
+import { PrismaClient } from "@prisma/client";
+import type { NextAuthConfig } from "next-auth";
+import GitHub from "next-auth/providers/github";
+import { PrismaAdapter } from "@auth/prisma-adapter"
+
+
+const prisma = new PrismaClient()
 
 export const authConfig = {
-    providers: [GitHub],
-    callbacks: {
-        authorized({ auth, request: { nextUrl } }) {
-            const isLoggedIn = !!auth?.user;
-            const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-            if (isOnDashboard) {
-                if (isLoggedIn) return true;
-                return false; // Redirect unauthenticated users to login page
-            } else if (isLoggedIn) {
-                return Response.redirect(new URL('/dashboard', nextUrl));
-            }
-            return true;
-        },
+    adapter: PrismaAdapter(prisma), // this line crashes shit
+    providers:
+        [
+            GitHub({
+                async profile(profile) {
+                    return {
+                        // Convert GitHub's numeric ID to string
+                        id: profile.id.toString(),
+                        // Map required fields
+                        email: profile.email,
+                        name: profile.name || profile.login,
+                        image: profile.avatar_url,
+                        // Add custom role field
+                        // role: existingUser?.role ?? "user"
+                    }
+                }
+            })
+        ],
+    session: {
+        strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60,
     },
-    pages: { signIn: '/login' },
-    // Other config options
+    pages: {
+        signIn: "/login",
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.role = user.role;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            if (session.user) {
+                session.user.id = token.id;
+            }
+            return session;
+        }
+    }
+
 } satisfies NextAuthConfig;
