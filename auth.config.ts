@@ -18,7 +18,6 @@ export const authConfig = {
                     });
 
                     const userRole = user?.role;
-                    console.log(userRole);
 
                     return {
                         id: profile.id.toString(),
