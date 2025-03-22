@@ -7,6 +7,7 @@ import {
     AcademicCapIcon,
     BeakerIcon
   } from '@heroicons/react/24/outline';
+import { Role } from '@/app/_lib/prisma';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -30,13 +31,13 @@ export default function NavLinks() {
   ];
 
   
-  if (session?.user.role === "admin"){
+  if (session?.user.role === Role.ADMIN){
     links.push({name: 'Admin', href: '/dashboard/admin', icon: KeyIcon});
   }
-  if (session?.user.role === "teacher" || session?.user.role === "admin"){
+  if (session?.user.role === Role.TEACHER || session?.user.role === Role.ADMIN){
     links.push({name: 'Teacher', href: `/dashboard/teacher`, icon: AcademicCapIcon});
   }
-  if (session?.user.role === "lab-manager" || session?.user.role === "admin"){
+  if (session?.user.role === Role.LAB_MANAGER || session?.user.role === Role.ADMIN){
     links.push({name: 'Lab Manager', href: `/dashboard/lab-manager`, icon: BeakerIcon});
   }
   return (

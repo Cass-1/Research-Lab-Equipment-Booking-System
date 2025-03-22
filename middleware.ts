@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
+import { Role } from "@/app/_lib/prisma";
 
 
 export default auth(async (req) => {
@@ -23,18 +24,18 @@ export default auth(async (req) => {
     const userRole = req.auth?.user.role;
 
     const adminRoutes = ["/dashboard/admin"];
-    const adminRoles = ["admin"];
+    const adminRoles = [Role.ADMIN];
     if (adminRoutes.some(route => reqPath.includes(route)) && !adminRoles.includes(userRole)) {
         return NextResponse.redirect(new URL("/permission-denied", nextUrl));
     }
 
     const teacherRoutes = ["/dashboard/teacher"];
-    const teacherRoles = ["teacher", "admin"];
+    const teacherRoles = [Role.TEACHER, Role.ADMIN];
     if (teacherRoutes.some(route => reqPath.includes(route)) && !teacherRoles.includes(userRole)) {
         return NextResponse.redirect(new URL("/permission-denied", nextUrl));
     }
     const labManagerRoutes = ["/dashboard/lab-manager"];
-    const labManagerRoles = ["lab-manager", "admin"];
+    const labManagerRoles = [Role.LAB_MANAGER, Role.ADMIN];
     if (labManagerRoutes.some(route => reqPath.includes(route)) && !labManagerRoles.includes(userRole)) {
         return NextResponse.redirect(new URL("/permission-denied", nextUrl));
     }
