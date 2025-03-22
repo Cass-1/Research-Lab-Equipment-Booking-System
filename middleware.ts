@@ -1,7 +1,8 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-export default auth((req) => {
+
+export default auth(async (req) => {
     const { nextUrl } = req;
     const isLoggedIn = !!req.auth;
 
@@ -13,10 +14,17 @@ export default auth((req) => {
             : NextResponse.next();
     }
 
-    // Protected routes
     if (!isLoggedIn) {
         return NextResponse.redirect(new URL("/login", nextUrl));
     }
+
+    // Protected routes
+    const adminRoutes = ["/dashboard/admin"];
+    console.log(req.auth?.user.role);
+    if (adminRoutes.includes(nextUrl.pathname) && req.auth?.user.role !== "admin") {
+        return NextResponse.redirect(new URL("/dashboard/denied", nextUrl));
+    }
+
 
     return NextResponse.next();
 });
