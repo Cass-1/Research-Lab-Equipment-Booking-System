@@ -25,13 +25,13 @@ export default auth(async (req) => {
     const adminRoutes = ["/dashboard/admin"];
     const adminRoles = ["admin"];
     if (adminRoutes.some(route => reqPath.includes(route)) && !adminRoles.includes(userRole)) {
-        return NextResponse.redirect(new URL("/denied", nextUrl));
+        return NextResponse.redirect(new URL("/permission-denied", nextUrl));
     }
 
     const teacherRoutes = ["/dashboard/teacher"];
     const teacherRoles = ["teacher", "admin"];
     if (teacherRoutes.some(route => reqPath.includes(route)) && !teacherRoles.includes(userRole)) {
-        return NextResponse.redirect(new URL("/denied", nextUrl));
+        return NextResponse.redirect(new URL("/permission-denied", nextUrl));
     }
     const labManagerRoutes = ["/dashboard/lab-manager"];
     const labManagerRoles = ["lab-manager", "admin"];
