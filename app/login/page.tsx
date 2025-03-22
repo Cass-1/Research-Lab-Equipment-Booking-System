@@ -9,7 +9,7 @@ export default function Page(){
           <div className="w-32 text-white md:w-36">
           </div>
         </div>
-        <Suspense>
+        <Suspense fallback={<h1>loading...</h1>}>
           <LoginForm />
         </Suspense>
       </div>

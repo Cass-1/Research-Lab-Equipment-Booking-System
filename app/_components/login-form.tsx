@@ -1,15 +1,18 @@
 import { signIn } from "@/auth";
+import FormLoginButton from "./form-login-button";
 
 export default function LoginForm() {
   return (
     <form
-    action={async () => {
-      "use server";
-      await signIn("github", {redirectTo: "/"});
-    }}
-    className="flex cursor-pointer items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-  >
-    <button className="cursor-pointer" type="submit">Log In</button>
+      action={async () => {
+        "use server";
+        await signIn("github", {redirectTo: "/"});
+      }}
+      className="flex-col items-center self-start "
+    >
+    <FormLoginButton/>
   </form>
   );
 }
+
+
