@@ -20,7 +20,6 @@ export default auth(async (req) => {
 
     // Protected routes
     const adminRoutes = ["/dashboard/admin"];
-    console.log(req.auth?.user.role);
     if (adminRoutes.includes(nextUrl.pathname) && req.auth?.user.role !== "admin") {
         return NextResponse.redirect(new URL("/dashboard/denied", nextUrl));
     }
