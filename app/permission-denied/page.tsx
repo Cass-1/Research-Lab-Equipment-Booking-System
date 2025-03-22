@@ -9,7 +9,7 @@ export default function Page(){
         You don’t have permission to access this page.
       </p>
       <Link href="/" className="mt-6 text-blue-500 hover:underline">
-        Return to Home
+        Return to Dashboard
       </Link>
     </div>
     )

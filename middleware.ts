@@ -5,11 +5,11 @@ import { NextResponse } from "next/server";
 export default auth(async (req) => {
     const { nextUrl } = req;
     const isLoggedIn = !!req.auth;
-    const pathname = nextUrl.pathname;
+    const reqPath = nextUrl.pathname;
 
     // Public routes
     const publicRoutes = ["/login", "/"];
-    if (publicRoutes.includes(pathname)) {
+    if (publicRoutes.includes(reqPath)) {
         return isLoggedIn
             ? NextResponse.redirect(new URL("/dashboard", nextUrl))
             : NextResponse.next();
@@ -24,19 +24,19 @@ export default auth(async (req) => {
 
     const adminRoutes = ["/dashboard/admin"];
     const adminRoles = ["admin"];
-    if (adminRoutes.some(route => pathname.includes(route)) && !adminRoles.includes(userRole)) {
+    if (adminRoutes.some(route => reqPath.includes(route)) && !adminRoles.includes(userRole)) {
         return NextResponse.redirect(new URL("/denied", nextUrl));
     }
 
     const teacherRoutes = ["/dashboard/teacher"];
     const teacherRoles = ["teacher", "admin"];
-    if (teacherRoutes.some(route => pathname.includes(route)) && !teacherRoles.includes(userRole)) {
+    if (teacherRoutes.some(route => reqPath.includes(route)) && !teacherRoles.includes(userRole)) {
         return NextResponse.redirect(new URL("/denied", nextUrl));
     }
     const labManagerRoutes = ["/dashboard/lab-manager"];
     const labManagerRoles = ["lab-manager", "admin"];
-    if (labManagerRoutes.some(route => pathname.includes(route)) && !labManagerRoles.includes(userRole)) {
-        return NextResponse.redirect(new URL("/denied", nextUrl));
+    if (labManagerRoutes.some(route => reqPath.includes(route)) && !labManagerRoles.includes(userRole)) {
+        return NextResponse.redirect(new URL("/permission-denied", nextUrl));
     }
 
 
