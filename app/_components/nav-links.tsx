@@ -1,22 +1,30 @@
+import { auth } from '@/auth';
 import {
     UserGroupIcon,
     HomeIcon,
     DocumentDuplicateIcon,
+    KeyIcon
   } from '@heroicons/react/24/outline';
+
   
-  // Map of links to display in the side navigation.
-  // Depending on the size of the application, this would be stored in a database.
-  const links = [
-    { name: 'Home', href: '/dashboard', icon: HomeIcon },
-    {
-      name: 'Invoices',
-      href: '/dashboard/invoices',
-      icon: DocumentDuplicateIcon,
-    },
-    { name: 'Users', href: '/dashboard/users', icon: UserGroupIcon },
-  ];
-  
-  export default function NavLinks() {
+  export default async function NavLinks() {
+    // Map of links to display in the side navigation.
+    // Depending on the size of the application, this would be stored in a database.
+    const links = [
+      { name: 'Home', href: '/dashboard', icon: HomeIcon },
+      {
+        name: 'Invoices',
+        href: '/dashboard/invoices',
+        icon: DocumentDuplicateIcon,
+      },
+      { name: 'User', href: '/dashboard/users', icon: UserGroupIcon },
+    ];
+
+    const session = await auth();
+    console.log(session?.user);
+    if (session?.user.role === "admin"){
+      links.push({name: 'Admin', href: '/dashboard/admin', icon: KeyIcon});
+    }
     return (
       <>
         {links.map((link) => {
