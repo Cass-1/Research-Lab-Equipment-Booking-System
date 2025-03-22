@@ -1,100 +1,58 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
+  datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-model analytics_reports {
-  report_id   Int       @id @default(autoincrement())
-  report_type String?   @db.VarChar(100)
-  date        DateTime? @default(now()) @db.Timestamp(6)
-  data        Json?
+ 
+generator client {
+  provider = "prisma-client-js"
 }
-
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-model bookings {
-  booking_id   Int        @id @default(autoincrement())
-  user_id      Int?
-  equipment_id Int?
-  start_time   DateTime   @db.Timestamp(6)
-  end_time     DateTime   @db.Timestamp(6)
-  status       String?    @db.VarChar(50)
-  equipment    equipment? @relation(fields: [equipment_id], references: [equipment_id], onDelete: Cascade, onUpdate: NoAction)
-  users        users?     @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? 
+  access_token       String? 
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? 
+  session_state      String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
-
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-model equipment {
-  equipment_id   Int           @id @default(autoincrement())
-  equipment_name String        @db.VarChar(255)
-  equipment_type String        @db.VarChar(100)
-  status         String?       @db.VarChar(50)
-  lab_section_id Int?
-  bookings       bookings[]
-  lab_sections   lab_sections? @relation(fields: [lab_section_id], references: [lab_section_id], onDelete: Cascade, onUpdate: NoAction)
+ 
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@map("sessions")
 }
-
-model lab_managers {
-  lab_manager_id Int            @id
-  department     String?        @db.VarChar(100)
-  users          users          @relation(fields: [lab_manager_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
-  lab_sections   lab_sections[]
+ 
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+ 
+  @@map("users")
 }
-
-model lab_sections {
-  lab_section_id   Int                @id @default(autoincrement())
-  teacher_id       Int?
-  lab_manager_id   Int?
-  equipment        equipment[]
-  lab_managers     lab_managers?      @relation(fields: [lab_manager_id], references: [lab_manager_id], onUpdate: NoAction)
-  teachers         teachers?          @relation(fields: [teacher_id], references: [teacher_id], onUpdate: NoAction)
-  student_sections student_sections[]
-}
-
-model student_sections {
-  student_id     Int
-  lab_section_id Int
-  lab_sections   lab_sections @relation(fields: [lab_section_id], references: [lab_section_id], onDelete: Cascade, onUpdate: NoAction)
-  students       students     @relation(fields: [student_id], references: [student_id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([student_id, lab_section_id])
-}
-
-model students {
-  student_id       Int                @id
-  major            String?            @db.VarChar(100)
-  enrollment_year  Int?
-  student_sections student_sections[]
-  users            users              @relation(fields: [student_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
-}
-
-model system_admins {
-  system_admin_id Int     @id
-  department      String? @db.VarChar(100)
-  access_level    String? @db.VarChar(50)
-  users           users   @relation(fields: [system_admin_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
-}
-
-model teachers {
-  teacher_id   Int            @id
-  department   String?        @db.VarChar(100)
-  lab_sections lab_sections[]
-  users        users          @relation(fields: [teacher_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
-}
-
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-model users {
-  user_id       Int            @id @default(autoincrement())
-  name          String         @db.VarChar(255)
-  email         String         @unique @db.VarChar(255)
-  password_hash String
-  role          String?        @db.VarChar(50)
-  bookings      bookings[]
-  lab_managers  lab_managers?
-  students      students?
-  system_admins system_admins?
-  teachers      teachers?
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+  @@map("verification_tokens")
 }

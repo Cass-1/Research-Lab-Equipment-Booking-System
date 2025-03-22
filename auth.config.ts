@@ -1,26 +1,21 @@
-import { PrismaClient } from "@prisma/client";
 import type { NextAuthConfig } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "./app/_lib/prisma"
 
-
-const prisma = new PrismaClient()
 
 export const authConfig = {
-    adapter: PrismaAdapter(prisma), // this line crashes shit
+    adapter: PrismaAdapter(prisma),
     providers:
         [
             GitHub({
-                async profile(profile) {
+                profile(profile) {
+
                     return {
-                        // Convert GitHub's numeric ID to string
                         id: profile.id.toString(),
-                        // Map required fields
+                        name: profile.name,
                         email: profile.email,
-                        name: profile.name || profile.login,
-                        image: profile.avatar_url,
-                        // Add custom role field
-                        // role: existingUser?.role ?? "user"
+                        image: profile.avatar_url
                     }
                 }
             })
