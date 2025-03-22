@@ -9,13 +9,23 @@ export const authConfig = {
     providers:
         [
             GitHub({
-                profile(profile) {
+                async profile(profile) {
+
+                    const user = await prisma.user.findFirst({
+                        where: {
+                            email: profile.email
+                        }
+                    });
+
+                    const userRole = user?.role;
+                    console.log(userRole);
 
                     return {
                         id: profile.id.toString(),
                         name: profile.name,
                         email: profile.email,
-                        image: profile.avatar_url
+                        image: profile.avatar_url,
+                        role: userRole ?? "user"
                     }
                 }
             })
