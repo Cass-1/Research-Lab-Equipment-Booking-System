@@ -9,6 +9,7 @@ export const authConfig = {
     providers:
         [
             GitHub({
+                // runs once and creates a user in the database
                 async profile(profile) {
                     return {
                         id: profile.id.toString(),
@@ -41,6 +42,7 @@ export const authConfig = {
             }
             return session;
         }
-    }
+    },
+    secret: process.env.SECRET
 
 } satisfies NextAuthConfig;
