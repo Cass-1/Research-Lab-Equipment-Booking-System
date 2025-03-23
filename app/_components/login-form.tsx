@@ -1,4 +1,4 @@
-import { signIn } from "@/auth";
+import { signIn, auth } from "@/auth";
 import FormLoginButton from "./form-login-button";
 
 export default async function LoginForm() {
