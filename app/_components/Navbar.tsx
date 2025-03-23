@@ -23,7 +23,8 @@ export default async function Navbar() {
               <form
                 action={async () => {
                   "use server";
-                  await signOut({ redirectTo: "/" });
+                  console.log("signing out", process.env.NEXTAUTH_URL);
+                  await signOut({ redirectTo: process.env.NEXTAUTH_URL});
                 }}
               >
                 <button className="cursor-pointer hover:text-orange-600" type="submit">Logout</button>
