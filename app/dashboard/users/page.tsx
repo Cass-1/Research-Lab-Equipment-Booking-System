@@ -1,19 +1,22 @@
-'use client';
-import { useEffect, useState } from 'react';
+import { prisma } from '@/app/_lib/prisma';
+import { auth } from '@/auth';
+import Image from 'next/image';
 
-export default function TestPage() {
-  const [data, setData] = useState<unknown[]>([]);
-
-  useEffect(() => {
-    fetch('/api/test')
-      .then(res => res.json())
-      .then(setData);
-  }, []);
-
+export default async function Page() {
+  console.log('running user page');
+  const session = await auth();
+  console.log('session', session);
+  const user = await prisma.user.findFirst({
+        where: {
+          email: session?.user.email,
+        },
+      });
+  console.log('user', user);
   return (
     <div>
       <h1>Database Test</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
+      <Image src={session?.user.image} alt='the user image' width={30} height={30}/>
     </div>
   );
 }

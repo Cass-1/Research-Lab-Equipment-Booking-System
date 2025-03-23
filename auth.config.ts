@@ -1,22 +1,47 @@
-import type { NextAuthConfig } from 'next-auth';
-import GitHub from 'next-auth/providers/github';
+import type { NextAuthConfig } from "next-auth";
+import GitHub from "next-auth/providers/github";
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "./app/_lib/prisma"
+
 
 export const authConfig = {
+    adapter: PrismaAdapter(prisma),
+    providers:
+        [
+            GitHub({
+                // runs once and creates a user in the database
+                async profile(profile) {
+                    return {
+                        id: profile.id.toString(),
+                        name: profile.name,
+                        email: profile.email,
+                        image: profile.avatar_url,
+                    }
+                }
+            })
+        ],
+    session: {
+        strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60,
+    },
     pages: {
-        signIn: '/login',
+        signIn: "/login",
     },
     callbacks: {
-        authorized({ auth, request: { nextUrl } }) {
-            const isLoggedIn = !!auth?.user;
-            const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-            if (isOnDashboard) {
-                if (isLoggedIn) return true;
-                return false; // Redirect unauthenticated users to login page
-            } else if (isLoggedIn) {
-                return Response.redirect(new URL('/dashboard', nextUrl));
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id;
+                token.role = user.role;
             }
-            return true;
+            return token;
         },
+        async session({ session, token }) {
+            if (session.user) {
+                session.user.id = token.id;
+                session.user.role = token.role;
+            }
+            return session;
+        }
     },
-    providers: [GitHub], // Add providers with an empty array for now
+    secret: process.env.SECRET,
 } satisfies NextAuthConfig;

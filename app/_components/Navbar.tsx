@@ -23,7 +23,7 @@ export default async function Navbar() {
               <form
                 action={async () => {
                   "use server";
-                  await signOut({ redirectTo: "/" });
+                  await signOut({ redirectTo: "/"});
                 }}
               >
                 <button className="cursor-pointer hover:text-orange-600" type="submit">Logout</button>

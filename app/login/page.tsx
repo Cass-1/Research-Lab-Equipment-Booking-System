@@ -1,4 +1,4 @@
-import LoginForm from '@/components/login-form';
+import LoginForm from '../_components/login-form';
 import { Suspense } from 'react';
 
 export default function Page(){
@@ -9,7 +9,7 @@ export default function Page(){
           <div className="w-32 text-white md:w-36">
           </div>
         </div>
-        <Suspense>
+        <Suspense fallback={<h1>loading...</h1>}>
           <LoginForm />
         </Suspense>
       </div>
