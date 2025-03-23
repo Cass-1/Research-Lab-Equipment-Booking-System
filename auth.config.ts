@@ -43,6 +43,4 @@ export const authConfig = {
             return session;
         }
     },
-    secret: process.env.SECRET
-
 } satisfies NextAuthConfig;
