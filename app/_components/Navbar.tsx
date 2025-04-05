@@ -20,6 +20,15 @@ export default async function Navbar() {
         <div className="flex items-center gap-5">
           {session && session?.user ? (
             <>
+              {/* Add Admin Lab Management Link */}
+              {session?.user?.role === 'ADMIN' && (
+                <Link 
+                  href="/admin/labs" 
+                  className="hover:text-orange-600"
+                >
+                  Lab Management
+                </Link>
+              )}
               <form
                 action={async () => {
                   "use server";

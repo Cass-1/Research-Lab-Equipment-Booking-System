@@ -47,6 +47,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   role          Role      @default(USER)
+  labs         UserLab[]
 
   @@map("users")
 }
@@ -65,4 +66,34 @@ enum Role {
   ADMIN
   TEACHER
   LAB_MANAGER
+}
+
+model Lab {
+  id           String      @id @default(cuid())
+  name         String
+  description  String?
+  imageUrl     String?
+  equipmentCount Int?      @default(0)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  users        UserLab[]
+  equipment    Equipment[]
+}
+
+model UserLab {
+  userId       String
+  labId        String
+  user         User        @relation(fields: [userId], references: [id])
+  lab          Lab         @relation(fields: [labId], references: [id])
+  @@id([userId, labId])
+}
+
+
+model Equipment {
+  id           String     @id @default(cuid())
+  name         String
+  description  String?
+  labId        String
+  quantity     Int
+  lab          Lab        @relation(fields: [labId], references: [id])
 }
