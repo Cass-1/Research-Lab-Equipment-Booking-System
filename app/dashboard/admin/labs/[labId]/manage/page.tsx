@@ -25,7 +25,7 @@ type Lab = {
 };
 
 export default function ManageLabMembersPage({ params }: { params: { labId: string } }) {
-  const router = useRouter();
+  // const router = useRouter();
   const { labId } = params;
   
   const [lab, setLab] = useState<Lab | null>(null);
