@@ -30,7 +30,7 @@ export default async function CreateLabPage() {
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Create a New Lab</h1>
-            <form action={handleCreateLab} method="post" className="space-y-4">
+            <form action={handleCreateLab} className="space-y-4">
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                         Lab Name
