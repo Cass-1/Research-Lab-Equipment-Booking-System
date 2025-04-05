@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ message: 'Equipment added successfully' }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to add equipment' }, { status: 500 });
   }
 }

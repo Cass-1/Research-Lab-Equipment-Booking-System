@@ -37,7 +37,7 @@ export async function GET(
     }
     
     return NextResponse.json(lab);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: 'Error fetching lab' },
       { status: 500 }
@@ -83,7 +83,7 @@ export async function PUT(
     });
     
     return NextResponse.json(updatedLab);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: 'Error updating lab' },
       { status: 500 }
@@ -114,7 +114,7 @@ export async function DELETE(
     });
     
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch{
     return NextResponse.json(
       { message: 'Error deleting lab' },
       { status: 500 }

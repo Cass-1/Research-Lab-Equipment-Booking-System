@@ -41,8 +41,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(lab, { status: 201 });
-  } catch (error) {
-    console.error('Error creating lab:', error);
+  } catch {
+    console.log('Error creating lab:');
     return NextResponse.json(
       { message: 'Failed to create lab' },
       { status: 500 }
