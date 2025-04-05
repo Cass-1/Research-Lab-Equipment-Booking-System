@@ -43,7 +43,7 @@ export async function PUT(
     });
     
     return NextResponse.json(updatedUserLab);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: 'Error updating lab member' },
       { status: 500 }
@@ -79,7 +79,7 @@ export async function DELETE(
     });
     
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: 'Error removing lab member' },
       { status: 500 }

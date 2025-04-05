@@ -70,7 +70,7 @@ export async function POST(
     });
     
     return NextResponse.json(userLab, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: 'Error adding lab member' },
       { status: 500 }
