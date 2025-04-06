@@ -21,6 +21,7 @@ export default async function Page() {
   });
 
   const userLabs = userWithLabs?.labs || [];
+  const userRole = session?.user?.role;
 
   return (
     <div className="p-6">
@@ -35,7 +36,7 @@ export default async function Page() {
               <LabCard 
                 key={userLab.labId} 
                 lab={userLab.lab}
-                role={userLab.role} 
+                role={userRole} 
               />
             ))
           )}

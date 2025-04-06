@@ -34,7 +34,6 @@ export async function POST(req: NextRequest) {
         users: {
           create: {
             userId: session.user.id,
-            role: 'ADMIN'
           }
         }
       },

@@ -2,9 +2,9 @@ import { auth } from '@/auth';
 import { prisma } from '@/app/_lib/prisma';
 import { redirect } from 'next/navigation';
 
-export default async function DeleteEquipmentPage({ params }: { params: { labId: string; equipmentId: string } }) {
+export default async function DeleteEquipmentPage({ params }: { params: Promise<{ labId: string; equipmentId: string }> }) {
   const session = await auth();
-
+  const { labId, equipmentId } = await params;
   // Check if user is authenticated and has admin role
   if (!session?.user || session.user.role !== 'ADMIN') {
     redirect('/dashboard');
@@ -12,10 +12,10 @@ export default async function DeleteEquipmentPage({ params }: { params: { labId:
 
   async function handleDeleteEquipment() {
     await prisma.equipment.delete({
-      where: { id: params.equipmentId },
+      where: { id: equipmentId },
     });
 
-    redirect(`/dashboard/admin/equipment/${params.labId}`);
+    redirect(`/dashboard/admin/equipment/${labId}`);
   }
 
   return (

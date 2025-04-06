@@ -5,9 +5,9 @@ import { auth } from '@/auth';
 // Add a member to a lab
 export async function POST(
   req: NextRequest,
-  { params }: { params: { labId: string } }
+  { params }: { params: Promise<{ labId: string }> }
 ) {
-  const { labId } = params;
+  const { labId } = await params;
   const session = await auth();
   
   // Check authorization
@@ -55,7 +55,6 @@ export async function POST(
       data: {
         userId: user.id,
         labId,
-        role,
       },
       include: {
         user: {

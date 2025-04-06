@@ -5,9 +5,9 @@ import { auth } from '@/auth';
 // Get a single lab
 export async function GET(
   req: NextRequest,
-  { params }: { params: { labId: string } }
+  { params }: { params: Promise<{ labId: string }> }
 ) {
-  const { labId } = params;
+  const { labId } = await params;
   
   try {
     const lab = await prisma.lab.findUnique({
@@ -48,9 +48,9 @@ export async function GET(
 // Update a lab
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { labId: string } }
+  { params }: { params: Promise<{ labId: string }> }
 ) {
-  const { labId } = params;
+  const { labId } = await params;
   const session = await auth();
   
   // Check authorization
@@ -94,9 +94,9 @@ export async function PUT(
 // Delete a lab
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { labId: string } }
+  { params }: { params: Promise<{ labId: string }> }
 ) {
-  const { labId } = params;
+  const { labId } = await params;
   const session = await auth();
   
   // Check authorization
@@ -108,15 +108,17 @@ export async function DELETE(
   }
   
   try {
+    console.log("The id is: " + labId);
     // Delete the lab
     await prisma.lab.delete({
       where: { id: labId }
     });
     
     return NextResponse.json({ success: true });
-  } catch{
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Error deleting lab';
     return NextResponse.json(
-      { message: 'Error deleting lab' },
+      { message: errorMessage },
       { status: 500 }
     );
   }

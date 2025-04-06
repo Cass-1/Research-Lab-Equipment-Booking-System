@@ -2,20 +2,20 @@ import { auth } from '@/auth';
 import { prisma } from '@/app/_lib/prisma';
 import { redirect } from 'next/navigation';
 
-export default async function EditEquipmentPage({ params }: { params: { labId: string; equipmentId: string } }) {
+export default async function EditEquipmentPage({ params }: { params: Promise<{ labId: string; equipmentId: string }> }) {
   const session = await auth();
-
+  const { labId, equipmentId } = await params;
   // Check if user is authenticated and has admin role
   if (!session?.user || session.user.role !== 'ADMIN') {
     redirect('/dashboard');
   }
 
   const equipment = await prisma.equipment.findUnique({
-    where: { id: params.equipmentId },
+    where: { id: equipmentId },
   });
 
   if (!equipment) {
-    redirect(`/dashboard/admin/equipment/${params.labId}`);
+    redirect(`/dashboard/admin/equipment/${labId}`);
   }
 
   async function handleEditEquipment(formData: FormData) {
@@ -23,14 +23,14 @@ export default async function EditEquipmentPage({ params }: { params: { labId: s
     const quantity = parseInt(formData.get('quantity') as string, 10);
 
     await prisma.equipment.update({
-      where: { id: params.equipmentId },
+      where: { id: equipmentId },
       data: {
         name,
         quantity,
       },
     });
 
-    redirect(`/dashboard/admin/equipment/${params.labId}`);
+    redirect(`/dashboard/admin/equipment/${labId}`);
   }
 
   return (

@@ -5,9 +5,9 @@ import { auth } from '@/auth';
 // Update a lab member's role
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { labId: string, userId: string } }
+  context: { params: Promise<{ labId: string; userId: string }> }
 ) {
-  const { labId, userId } = params;
+  const { labId, userId } = await context.params;
   const session = await auth();
   
   // Check authorization
@@ -21,6 +21,11 @@ export async function PUT(
   try {
     const { role } = await req.json();
     
+    const updatedUser = await prisma.user.update({
+
+      where: { id: userId },
+      data: { role },
+    });
     // Update the user's role in the lab
     const updatedUserLab = await prisma.userLab.update({
       where: {
@@ -29,7 +34,7 @@ export async function PUT(
           labId,
         }
       },
-      data: { role },
+      data: {},
       include: {
         user: {
           select: {
@@ -54,9 +59,9 @@ export async function PUT(
 // Remove a member from a lab
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { labId: string, userId: string } }
+  context: { params: Promise<{ labId: string; userId: string }> }
 ) {
-  const { labId, userId } = params;
+  const { labId, userId } = await context.params;
   const session = await auth();
   
   // Check authorization

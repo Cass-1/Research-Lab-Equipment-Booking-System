@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation';
 import { auth } from '@/auth';
 import Link from 'next/link';
 
-export default async function LabPage({ params }: { params: { labId: string } }) {
+export default async function LabPage({ params }: { params: Promise<{ labId: string }> }) {
   const session = await auth();
+  
   
   // Await params before destructuring
   const { labId } = await params;
@@ -95,7 +96,7 @@ export default async function LabPage({ params }: { params: { labId: string } })
               )}
               <div>
                 <p className="font-medium">{userLab.user.name}</p>
-                <p className="text-xs text-gray-500">{userLab.role}</p>
+                
               </div>
             </div>
           ))}
