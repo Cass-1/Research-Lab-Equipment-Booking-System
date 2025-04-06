@@ -61,7 +61,41 @@ Here are links to the issues that we completed in this sprint:
 
 ## Code Files for Review
 Please review the following code files, which were actively developed during this sprint, for quality:
- * 
+- app/api/equipment/route.ts
+- app/api/labs/[labId]/members/route.ts
+- app/api/labs/[labId]/members/[userID]/route.ts
+- app/api/labs/[labId]/route.ts
+- app/api/labs/route.ts
+- app/_components/lab-card.tsx
+- app/_components/lab-delete-page.tsx
+- app/_components/lab-edit-page.tsx
+- app/_components/lab-manage-page.tsx
+- app/_components/Navbar.tsx
+- app/dashboard/admin/equipment/[labId]/add/page.tsx
+- app/dashboard/admin/equipment/[labId]/delete/page.tsx
+- app/dashboard/admin/equipment/[labId]/edit/page.tsx
+- app/dashboard/admin/equipment/[labId]/page.tsx
+- app/dashboard/admin/equipment/page.tsx
+- app/dashboard/admin/labs/create/page.tsx
+- app/dashboard/admin/labs/[labId]/delete/page.tsx
+- app/dashboard/admin/labs/[labId]/edit/page.tsx
+- app/dashboard/admin/labs/[labId]/manage/page.tsx
+- app/dashboard/admin/labs/[labId]/page.tsx
+- app/dashboard/admin/labs/page.tsx
+- app/dashboard/admin/page.tsx
+- app/dashboard/page.tsx
+- app/lab/[labId]/page.tsx
+- docs/Sprint2Retrospective Report.pdf
+- makeAdmin.ts
+- next.config.ts
+- package.json
+- package-lock.json
+- prisma/schema.prisma
+- docs/planning-docs/Database Project Partial Report Submission.pdf
+- docs/planning-docs/Milestone 2(1).pdf
+- docs/sprint-1/sprint-1-report.md
+- docs/sprint-1/sprint1Retrospective Report.pdf
+- docs/sprint-2/sprint-2-report.md
  
 ## Retrospective Summary
 Here's what went well:
