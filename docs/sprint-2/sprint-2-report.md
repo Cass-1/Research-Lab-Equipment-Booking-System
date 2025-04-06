@@ -32,6 +32,7 @@ This sprint primarily focused on getting RBAC implemented and starting to create
 Here are the major PR's
   * [merges in the rbac branch](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/pull/49)
   * [UI lab and equipment](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/pull/58)
+  * [Sprint 2 documentation](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/pull/62)
 ### Issues
 Here are links to the issues that we completed in this sprint:
  * [learn react, html, and css](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/10)
