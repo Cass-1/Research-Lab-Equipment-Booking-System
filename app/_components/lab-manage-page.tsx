@@ -156,7 +156,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Manage Lab Members: {lab.name}</h1>
         <Link
-          href="/admin/labs"
+          href="/dashboard/lab-manager"
           className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           Back to Labs

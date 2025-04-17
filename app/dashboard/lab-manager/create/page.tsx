@@ -1,4 +1,4 @@
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
 
@@ -6,7 +6,7 @@ export default async function CreateLabPage() {
     const session = await auth();
 
     // Check if the user is an admin
-    if (!session?.user || session.user.role !== 'ADMIN') {
+    if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
         redirect('/dashboard');
     }
 
@@ -24,7 +24,7 @@ export default async function CreateLabPage() {
         });
 
         // Redirect back to the labs management page
-        redirect('/dashboard/admin/labs');
+        redirect('/dashboard/lab-manager');
     }
 
     return (

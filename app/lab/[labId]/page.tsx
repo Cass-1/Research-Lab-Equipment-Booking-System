@@ -1,4 +1,4 @@
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { notFound } from 'next/navigation';
 import { auth } from '@/auth';
 import Link from 'next/link';
@@ -53,7 +53,7 @@ export default async function LabPage({ params }: { params: Promise<{ labId: str
       <p className="text-gray-600 mb-8">{lab.description}</p>
       
       {/* Add Members Button for Admins */}
-      {session?.user?.role === 'ADMIN' && (
+      {session?.user?.role === Role.LAB_MANAGER && (
         <div className="mb-8">
           <Link href={`/lab/${labId}/add-members`}>
             <button className="bg-green-600 text-white px-4 py-2 rounded">

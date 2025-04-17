@@ -23,7 +23,7 @@ export default async function Navbar() {
               {/* Add Admin Lab Management Link */}
               {session?.user?.role === 'ADMIN' && (
                 <Link 
-                  href="/admin/labs" 
+                  href="/lab-manager" 
                   className="hover:text-orange-600"
                 >
                   Lab Management

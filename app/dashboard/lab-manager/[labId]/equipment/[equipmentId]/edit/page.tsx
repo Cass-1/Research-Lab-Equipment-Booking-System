@@ -1,12 +1,13 @@
 import { auth } from '@/auth';
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { redirect } from 'next/navigation';
 
 export default async function EditEquipmentPage({ params }: { params: Promise<{ labId: string; equipmentId: string }> }) {
   const session = await auth();
   const { labId, equipmentId } = await params;
+  console.log("lab id: " + labId + " equipment id: " +  equipmentId);
   // Check if user is authenticated and has admin role
-  if (!session?.user || session.user.role !== 'ADMIN') {
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
     redirect('/dashboard');
   }
 
@@ -15,10 +16,11 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
   });
 
   if (!equipment) {
-    redirect(`/dashboard/admin/equipment/${labId}`);
+    redirect(`/dashboard/lab-manager/equipment/${labId}`);
   }
 
   async function handleEditEquipment(formData: FormData) {
+    "use server";
     const name = formData.get('name') as string;
     const quantity = parseInt(formData.get('quantity') as string, 10);
 
@@ -30,11 +32,11 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
       },
     });
 
-    redirect(`/dashboard/admin/equipment/${labId}`);
+    redirect(`/dashboard/lab-manager/${labId}/equipment`);
   }
 
   return (
-    <form action={handleEditEquipment} method="post" className="p-6">
+    <form action={handleEditEquipment} className="p-6">
       <h1 className="text-2xl font-bold mb-6">Edit Equipment</h1>
       <div className="mb-4">
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">

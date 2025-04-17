@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { auth } from '@/auth';
 
 // Add a member to a lab
@@ -9,30 +9,30 @@ export async function POST(
 ) {
   const { labId } = await params;
   const session = await auth();
-  
+
   // Check authorization
-  if (!session?.user || session.user.role !== 'ADMIN') {
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
     );
   }
-  
+
   try {
     const { email, role } = await req.json();
-    
+
     // Find the user by email
     const user = await prisma.user.findUnique({
       where: { email }
     });
-    
+
     if (!user) {
       return NextResponse.json(
         { message: 'User not found with that email' },
         { status: 404 }
       );
     }
-    
+
     // Check if user is already in the lab
     const existingMember = await prisma.userLab.findUnique({
       where: {
@@ -42,14 +42,14 @@ export async function POST(
         }
       }
     });
-    
+
     if (existingMember) {
       return NextResponse.json(
         { message: 'User is already a member of this lab' },
         { status: 400 }
       );
     }
-    
+
     // Add user to lab
     const userLab = await prisma.userLab.create({
       data: {
@@ -67,7 +67,7 @@ export async function POST(
         }
       }
     });
-    
+
     return NextResponse.json(userLab, { status: 201 });
   } catch {
     return NextResponse.json(
