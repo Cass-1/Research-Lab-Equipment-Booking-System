@@ -16,7 +16,7 @@ export default async function DeleteEquipmentPage({ params }: { params: Promise<
       where: { id: equipmentId },
     });
 
-    redirect(`/dashboard/lab-manager/labs/${labId}/equipment`);
+    redirect(`/dashboard/lab-manager/${labId}/equipment`);
   }
 
   return (

@@ -32,7 +32,7 @@ export default function AddEquipmentPage() {
     });
 
     if (res.ok) {
-      router.push(`/dashboard/lab-manager/labs/${labId}/equipment`);
+      router.push(`/dashboard/lab-manager/${labId}/equipment`);
     } else {
       console.error('Failed to add equipment');
     }
