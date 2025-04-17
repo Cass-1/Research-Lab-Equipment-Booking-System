@@ -32,7 +32,7 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
       },
     });
 
-    redirect(`/dashboard/lab-manager/equipment/${labId}`);
+    redirect(`/dashboard/lab-manager/labs/${labId}/equipment`);
   }
 
   return (

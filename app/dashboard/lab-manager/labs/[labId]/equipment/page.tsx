@@ -20,7 +20,7 @@ export default async function LabEquipmentPage({ params }: { params: Promise<{ l
   });
 
   if (!lab) {
-    redirect('/dashboard/lab-manager/equipment');
+    redirect(`/dashboard/lab-manager/labs/${labId}`);
   }
 
   return (
@@ -28,7 +28,7 @@ export default async function LabEquipmentPage({ params }: { params: Promise<{ l
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Manage Equipment for {lab.name}</h1>
         <Link
-          href={`/dashboard/lab-manager/equipment/${lab.id}/add`}
+          href={`/dashboard/lab-manager/labs/${lab.id}/equipment/add`}
           className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
         >
           <PlusIcon className="w-5 h-5 mr-2" />
@@ -63,13 +63,13 @@ export default async function LabEquipmentPage({ params }: { params: Promise<{ l
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex space-x-3">
                     <Link
-                      href={`/dashboard/lab-manager/equipment/${lab.id}/item/${item.id}/edit`}
+                      href={`/dashboard/lab-manager/labs/${lab.id}/equipment/${item.id}/edit`}
                       className="text-indigo-600 hover:text-indigo-900"
                     >
                       <PencilIcon className="w-5 h-5" />
                     </Link>
                     <Link
-                      href={`/dashboard/lab-manager/equipment/${lab.id}/item/${item.id}/delete`}
+                      href={`/dashboard/lab-manager/labs/${lab.id}/equipment/${item.id}/delete`}
                       className="text-red-600 hover:text-red-900"
                     >
                       <TrashIcon className="w-5 h-5" />

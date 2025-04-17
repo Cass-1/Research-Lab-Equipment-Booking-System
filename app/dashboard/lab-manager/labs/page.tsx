@@ -80,6 +80,12 @@ export default async function AdminLabsPage() {
                     >
                       Manage
                     </Link>
+                    <Link
+                      href={`/dashboard/lab-manager/labs/${lab.id}/equipment`} 
+                      className="text-blue-600 hover:text-blue-900"
+                    >
+                      Manage Equipment
+                    </Link>
                     <Link 
                       href={`/dashboard/lab-manager/labs/${lab.id}/delete`}
 
