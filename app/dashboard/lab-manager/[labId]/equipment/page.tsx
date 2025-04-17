@@ -9,7 +9,7 @@ export default async function LabEquipmentPage({ params }: { params: Promise<{ l
   
   // Check if user is authenticated and has admin role
   if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
-    // redirect('/dashboard');
+    redirect('/dashboard');
   }
 
   const {labId} = await params;
