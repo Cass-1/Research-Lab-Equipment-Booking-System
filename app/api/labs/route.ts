@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { auth } from '@/auth';
 
 export async function POST(req: NextRequest) {
   // Check authentication and authorization
   const session = await auth();
-  if (!session?.user || session.user.role !== 'ADMIN') {
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   // This endpoint would return all labs (for admin listing)
   const session = await auth();
-  if (!session?.user || session.user.role !== 'ADMIN') {
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }

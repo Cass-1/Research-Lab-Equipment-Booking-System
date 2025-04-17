@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { auth } from '@/auth';
 
 // Update a lab member's role
@@ -9,18 +9,18 @@ export async function PUT(
 ) {
   const { labId, userId } = await context.params;
   const session = await auth();
-  
+
   // Check authorization
-  if (!session?.user || session.user.role !== 'ADMIN') {
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
     );
   }
-  
+
   try {
     const { role } = await req.json();
-    
+
     const updatedUser = await prisma.user.update({
 
       where: { id: userId },
@@ -46,7 +46,7 @@ export async function PUT(
         }
       }
     });
-    
+
     return NextResponse.json(updatedUserLab);
   } catch {
     return NextResponse.json(
@@ -63,15 +63,15 @@ export async function DELETE(
 ) {
   const { labId, userId } = await context.params;
   const session = await auth();
-  
+
   // Check authorization
-  if (!session?.user || session.user.role !== 'ADMIN') {
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
     );
   }
-  
+
   try {
     // Remove the user from the lab
     await prisma.userLab.delete({
@@ -82,7 +82,7 @@ export async function DELETE(
         }
       }
     });
-    
+
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json(

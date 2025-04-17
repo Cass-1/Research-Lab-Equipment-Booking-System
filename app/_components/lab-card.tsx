@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Lab } from '@prisma/client';
+import { Lab, Role } from '@prisma/client';
 
 interface LabCardProps {
   lab: Lab;
@@ -32,7 +32,7 @@ export default function LabCard({ lab, role }: LabCardProps) {
           <div className="flex items-center justify-between mb-2">
             <h3 className="font-bold text-lg truncate">{lab.name}</h3>
             <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-              {role === 'ADMIN' ? 'Admin' : role === 'PI' ? 'Principal Investigator' : 'Member'}
+              {role === Role.LAB_MANAGER ? 'Admin' : role === 'PI' ? 'Principal Investigator' : 'Member'}
             </span>
           </div>
           

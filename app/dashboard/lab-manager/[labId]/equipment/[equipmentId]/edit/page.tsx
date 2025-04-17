@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { redirect } from 'next/navigation';
 
 export default async function EditEquipmentPage({ params }: { params: Promise<{ labId: string; equipmentId: string }> }) {
@@ -7,7 +7,7 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
   const { labId, equipmentId } = await params;
   console.log("lab id: " + labId + " equipment id: " +  equipmentId);
   // Check if user is authenticated and has admin role
-  if (!session?.user || session.user.role !== 'ADMIN') {
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
     redirect('/dashboard');
   }
 

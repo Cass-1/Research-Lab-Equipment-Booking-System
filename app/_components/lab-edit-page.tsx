@@ -66,7 +66,7 @@ export default function EditLabPage({ labId }: {  labId: string } ) {
         throw new Error(errorData.message || 'Failed to update lab');
       }
       
-      router.push('/dashboard/lab-manager/labs');
+      router.push('/dashboard/lab-manager');
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unknown error occurred');
@@ -135,7 +135,7 @@ export default function EditLabPage({ labId }: {  labId: string } ) {
         
         <div className="flex justify-end space-x-3 pt-4">
           <Link
-            href="/lab-manager/labs"
+            href="/dashboard/lab-manager"
             className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             Cancel

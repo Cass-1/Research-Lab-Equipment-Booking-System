@@ -23,7 +23,7 @@ export default function DeleteLabPage({ labId }: { labId: string }) {
       }
 
       // Redirect to the labs list page after successful deletion
-      router.push('/dashboard/lab-manager/labs');
+      router.push('/dashboard/lab-manager');
     } catch (err: any) {
       setError(err.message);
     } finally {

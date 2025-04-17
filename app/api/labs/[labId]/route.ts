@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { auth } from '@/auth';
 
 // Get a single lab
@@ -8,7 +8,7 @@ export async function GET(
   { params }: { params: Promise<{ labId: string }> }
 ) {
   const { labId } = await params;
-  
+
   try {
     const lab = await prisma.lab.findUnique({
       where: { id: labId },
@@ -28,14 +28,14 @@ export async function GET(
         equipment: true,
       }
     });
-    
+
     if (!lab) {
       return NextResponse.json(
         { message: 'Lab not found' },
         { status: 404 }
       );
     }
-    
+
     return NextResponse.json(lab);
   } catch {
     return NextResponse.json(
@@ -52,18 +52,18 @@ export async function PUT(
 ) {
   const { labId } = await params;
   const session = await auth();
-  
+
   // Check authorization
-  if (!session?.user || session.user.role !== 'ADMIN') {
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
     );
   }
-  
+
   try {
     const { name, description, imageUrl } = await req.json();
-    
+
     // Validate input
     if (!name || name.trim() === '') {
       return NextResponse.json(
@@ -71,7 +71,7 @@ export async function PUT(
         { status: 400 }
       );
     }
-    
+
     // Update the lab
     const updatedLab = await prisma.lab.update({
       where: { id: labId },
@@ -81,7 +81,7 @@ export async function PUT(
         imageUrl,
       }
     });
-    
+
     return NextResponse.json(updatedLab);
   } catch {
     return NextResponse.json(
@@ -98,22 +98,22 @@ export async function DELETE(
 ) {
   const { labId } = await params;
   const session = await auth();
-  
+
   // Check authorization
-  if (!session?.user || session.user.role !== 'ADMIN') {
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
     );
   }
-  
+
   try {
     console.log("The id is: " + labId);
     // Delete the lab
     await prisma.lab.delete({
       where: { id: labId }
     });
-    
+
     return NextResponse.json({ success: true });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Error deleting lab';

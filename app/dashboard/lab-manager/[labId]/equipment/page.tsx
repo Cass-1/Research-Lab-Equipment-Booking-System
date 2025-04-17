@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
@@ -8,8 +8,8 @@ export default async function LabEquipmentPage({ params }: { params: Promise<{ l
   const session = await auth();
   
   // Check if user is authenticated and has admin role
-  if (!session?.user || session.user.role !== 'ADMIN') {
-    redirect('/dashboard');
+  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+    // redirect('/dashboard');
   }
 
   const {labId} = await params;
