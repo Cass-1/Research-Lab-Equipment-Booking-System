@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 export default async function EditEquipmentPage({ params }: { params: Promise<{ labId: string; equipmentId: string }> }) {
   const session = await auth();
   const { labId, equipmentId } = await params;
+  console.log("lab id: " + labId + " equipment id: " +  equipmentId);
   // Check if user is authenticated and has admin role
   if (!session?.user || session.user.role !== 'ADMIN') {
     redirect('/dashboard');
@@ -15,10 +16,11 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
   });
 
   if (!equipment) {
-    redirect(`/dashboard/admin/equipment/${labId}`);
+    redirect(`/dashboard/lab-manager/equipment/${labId}`);
   }
 
   async function handleEditEquipment(formData: FormData) {
+    "use server";
     const name = formData.get('name') as string;
     const quantity = parseInt(formData.get('quantity') as string, 10);
 
@@ -30,7 +32,7 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
       },
     });
 
-    redirect(`/dashboard/admin/equipment/${labId}`);
+    redirect(`/dashboard/lab-manager/equipment/${labId}`);
   }
 
   return (

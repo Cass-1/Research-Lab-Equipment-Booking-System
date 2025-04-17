@@ -11,11 +11,12 @@ export default async function DeleteEquipmentPage({ params }: { params: Promise<
   }
 
   async function handleDeleteEquipment() {
+    "use server";
     await prisma.equipment.delete({
       where: { id: equipmentId },
     });
 
-    redirect(`/dashboard/admin/equipment/${labId}`);
+    redirect(`/dashboard/lab-manager/equipment/${labId}`);
   }
 
   return (

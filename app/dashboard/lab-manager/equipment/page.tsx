@@ -40,7 +40,7 @@ export default async function EquipmentManagementPage() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <Link
-                    href={`/dashboard/admin/equipment/${lab.id}`}
+                    href={`/dashboard/lab-manager/equipment/${lab.id}`}
                     className="text-blue-600 hover:text-blue-900"
                   >
                     Manage Equipment

@@ -27,7 +27,7 @@ export default async function AdminLabsPage() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Lab Management</h1>
         <Link 
-          href="/dashboard/admin/labs/create" 
+          href="/dashboard/lab-manager/labs/create" 
           className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
         >
           <PlusIcon className="w-5 h-5 mr-2" />
@@ -69,19 +69,19 @@ export default async function AdminLabsPage() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex space-x-3">
                     <Link 
-                      href={`/dashboard/admin/labs/${lab.id}/edit`} 
+                      href={`/dashboard/lab-manager/labs/${lab.id}/edit`} 
                       className="text-indigo-600 hover:text-indigo-900"
                     >
                       <PencilIcon className="w-5 h-5" />
                     </Link>
                     <Link 
-                      href={`/dashboard/admin/labs/${lab.id}/manage`} 
+                      href={`/dashboard/lab-manager/labs/${lab.id}/manage`} 
                       className="text-blue-600 hover:text-blue-900"
                     >
                       Manage
                     </Link>
                     <Link 
-                      href={`/dashboard/admin/labs/${lab.id}/delete`}
+                      href={`/dashboard/lab-manager/labs/${lab.id}/delete`}
 
                       className="text-red-600 hover:text-red-900"
                     >
