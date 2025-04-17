@@ -36,7 +36,7 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
   }
 
   return (
-    <form action={handleEditEquipment} method="post" className="p-6">
+    <form action={handleEditEquipment} className="p-6">
       <h1 className="text-2xl font-bold mb-6">Edit Equipment</h1>
       <div className="mb-4">
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">

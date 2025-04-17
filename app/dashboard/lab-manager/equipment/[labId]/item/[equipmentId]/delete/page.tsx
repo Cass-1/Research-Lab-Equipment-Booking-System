@@ -23,7 +23,7 @@ export default async function DeleteEquipmentPage({ params }: { params: Promise<
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Delete Equipment</h1>
       <p className="mb-4">Are you sure you want to delete this equipment?</p>
-      <form action={handleDeleteEquipment} method="post">
+      <form action={handleDeleteEquipment}>
         <button
           type="submit"
           className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
