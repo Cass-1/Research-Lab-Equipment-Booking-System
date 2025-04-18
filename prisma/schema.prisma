@@ -39,15 +39,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  email         String?        @unique
+  emailVerified DateTime?      @map("email_verified")
   image         String?
   accounts      Account[]
   sessions      Session[]
-  role          Role      @default(USER)
-  labs         UserLab[]
+  role          Role           @default(USER)
+  labs          UserLab[]
+  Reservations  Reservations[]
 
   @@map("users")
 }
@@ -69,31 +70,41 @@ enum Role {
 }
 
 model Lab {
-  id           String      @id @default(cuid())
-  name         String
-  description  String?
-  imageUrl     String?
-  equipmentCount Int?      @default(0)
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  users        UserLab[]
-  equipment    Equipment[]
+  id             String      @id @default(cuid())
+  name           String
+  description    String?
+  imageUrl       String?
+  equipmentCount Int?        @default(0)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  users          UserLab[]
+  equipment      Equipment[]
 }
 
 model UserLab {
-  userId       String
-  labId        String
-  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  lab          Lab         @relation(fields: [labId], references: [id], onDelete: Cascade)
+  userId String
+  labId  String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lab    Lab    @relation(fields: [labId], references: [id], onDelete: Cascade)
+
   @@id([userId, labId])
 }
 
-
 model Equipment {
-  id           String     @id @default(cuid())
+  id           String         @id @default(cuid())
   name         String
   description  String?
   labId        String
   quantity     Int
-  lab          Lab        @relation(fields: [labId], references: [id], onDelete: Cascade)
+  lab          Lab            @relation(fields: [labId], references: [id], onDelete: Cascade)
+  Reservations Reservations[]
+}
+
+model Reservations {
+  id          String    @id @default(cuid())
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date        DateTime
 }
