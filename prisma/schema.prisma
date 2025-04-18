@@ -107,4 +107,5 @@ model Reservations {
   userId      String
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   date        DateTime
+  approved    Boolean
 }
