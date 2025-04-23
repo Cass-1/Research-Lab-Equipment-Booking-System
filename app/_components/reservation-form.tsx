@@ -7,7 +7,7 @@ export default function CreateReservation(params: {equipmentId: string, userId: 
         <input name="equipmentId" type="hidden" value={params.equipmentId}/>
         <input name="approved" type="hidden" value="false"/>
         <input name="userId" type="hidden" value={params.userId}/>
-        <input name="userId" type="datetime-local"/>
+        <input name="date" required={true} type="date"/>
         <button type="submit">Submit</button>
     </form>);
 }

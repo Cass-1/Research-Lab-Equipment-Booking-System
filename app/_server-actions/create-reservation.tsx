@@ -1,5 +1,6 @@
 "use server";
 
+import { error } from "console";
 import { prisma } from "../_lib/prisma";
 
 type EquipmentFormData = {
@@ -10,15 +11,11 @@ type EquipmentFormData = {
 }
 export default async function CreateReservation(formData: FormData){
     const rawData: EquipmentFormData = {
-        equipmentId: formData.get("equipmentId")?.toString() ?? "",
-        userId: formData.get("userId")?.toString() ?? "",
-        date: formData.get("date")?.valueOf(),
+        equipmentId: formData.get("equipmentId")!.toString(),
+        userId: formData.get("userId")!.toString(),
+        date: new Date(formData.get("date")!.toString()),
         approved: formData.get("approved")?.toString().toLocaleLowerCase() === "true"
-
     }
-    console.log("hello world");
-    console.log(formData.get("date")?.valueOf());
-
     await prisma.reservations.create({
         data: {
             equipmentId: rawData.equipmentId,

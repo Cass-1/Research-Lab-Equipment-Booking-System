@@ -11,6 +11,6 @@ export default async function Page({ params }: { params: Promise<{ equipmentId: 
     return (
     <>
         <span>{equipmentId}</span>
-        <ReservationForm equipmentId={equipmentId} userId={session?.user} />
+        <ReservationForm equipmentId={equipmentId} userId={session?.user.id} />
     </>)
 }
