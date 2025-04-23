@@ -2,6 +2,7 @@ import { prisma, Role } from '@/app/_lib/prisma';
 import { notFound } from 'next/navigation';
 import { auth } from '@/auth';
 import Link from 'next/link';
+import EquipmentCard from '@/app/_components/equipment-card';
 
 export default async function LabPage({ params }: { params: Promise<{ labId: string }> }) {
   const session = await auth();
@@ -70,16 +71,10 @@ export default async function LabPage({ params }: { params: Promise<{ labId: str
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {lab.equipment.map((item) => (
-              <div key={item.id} className="border rounded-lg p-4 shadow-sm">
-                <h3 className="font-medium">{item.name}</h3>
-                <p className="text-sm text-gray-500">{item.description}</p>
-                <button className="mt-2 bg-blue-600 text-white px-3 py-1 rounded text-sm">
-                  Book Equipment
-                </button>
-              </div>
+              <EquipmentCard key={item.id} labName={lab.name} equipmentId={item.id} equipmentName={item.name}/>
             ))}
           </div>
-        )}
+        )}z
       </div>
       
       <div>
