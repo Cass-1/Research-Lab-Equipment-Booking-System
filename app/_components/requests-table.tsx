@@ -1,25 +1,29 @@
 "use client";
 import Td from "./td";
 import Th from "./th"
-import FindReservations from "../_server-actions/find-reservations";
-import ApproveReservationButton from "./approve-reservation-button";
-import { Reservations } from "@prisma/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./button";
 import ApproveReservation from "../_server-actions/approve-reservation";
 
 interface RequestsTableProps{
     labId: string,
-    data: any[]
+    data: any[],
+    approve: boolean
 }
 
 export default function ReservationsTable(params: RequestsTableProps){
   const columnNames = ["Equipment", "User", "Day"];
-  const [items, setItems] = useState(params.data);
+  const [deletedIds, setDeletedIds] = useState<string[]>([]);
+  const [showApproved, setShowApproved] = useState(true);
 
+  useEffect(()=> {
+    setShowApproved(params.approve);
+  }, [params.approve]);
+
+  const items = params.data.filter(x => !deletedIds.includes(x.id));
   async function handleButtonClick(reservationId: string){
-    setItems(items.filter(item => item.id !=reservationId));
-    await ApproveReservation(reservationId);
+    setDeletedIds([...deletedIds, reservationId]);
+    await ApproveReservation(reservationId, !showApproved);
   }
 
 
@@ -46,7 +50,7 @@ export default function ReservationsTable(params: RequestsTableProps){
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div className="flex space-x-3">
                 <Button onClick={() => {handleButtonClick(item.id)}}>
-                  Approve
+                  {params.approve ? "Approve" : "Cancel"}
                 </Button>
                   </div>
                 </td>
