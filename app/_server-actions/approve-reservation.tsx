@@ -1,9 +1,8 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { prisma } from "../_lib/prisma";
 
-export default async function ApproveReservation(reservationId: string, path: string){
+export default async function ApproveReservation(reservationId: string){
     await prisma.reservations.update({
         where:{
             id: reservationId
@@ -12,6 +11,4 @@ export default async function ApproveReservation(reservationId: string, path: st
             approved: true
         }
     })
-
-    revalidatePath(path);
 }

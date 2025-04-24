@@ -1,16 +1,27 @@
+"use client";
 import Td from "./td";
 import Th from "./th"
 import FindReservations from "../_server-actions/find-reservations";
 import ApproveReservationButton from "./approve-reservation-button";
+import { Reservations } from "@prisma/client";
+import { useState } from "react";
+import Button from "./button";
+import ApproveReservation from "../_server-actions/approve-reservation";
 
 interface RequestsTableProps{
-    labId: string
+    labId: string,
+    data: Reservations[]
 }
 
-export default async function RequestsTable(params: RequestsTableProps){
+export default function ReservationsTable(params: RequestsTableProps){
   const columnNames = ["Equipment", "User", "Day"];
+  const [items, setItems] = useState(params.data);
 
-  const requests = await FindReservations(params.labId);
+  async function handleButtonClick(reservationId: string){
+    setItems(items.filter(item => item.id !=reservationId));
+    await ApproveReservation(reservationId);
+  }
+
 
     return (
         <>
@@ -24,17 +35,19 @@ export default async function RequestsTable(params: RequestsTableProps){
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {requests.map((request) => (
-              <tr key={request.id} className="hover:bg-gray-50">
-                <Td>{request.equipment.name}</Td>
-                <Td>{request.user.name}</Td>
-                <Td>{request.date.toString()}</Td>
+            {items.map((item) => (
+              <tr key={item.id} className="hover:bg-gray-50">
+                <Td>{item.equipment.name}</Td>
+                <Td>{item.user.name}</Td>
+                <Td>{item.date.toString()}</Td>
                 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div className="flex space-x-3">
-                <ApproveReservationButton requestId={request.id} path={`/dashboard/lab-manager/${params.labId}/reservations`}/>
+                <Button onClick={() => {handleButtonClick(item.id)}}>
+                  Approve
+                </Button>
                   </div>
                 </td>
               </tr>
