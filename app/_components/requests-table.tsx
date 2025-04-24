@@ -1,7 +1,7 @@
 import Td from "./td";
 import Th from "./th"
 import FindReservations from "../_server-actions/find-reservations";
-import AppriveReservationButton from "./approve-reservation-button";
+import ApproveReservationButton from "./approve-reservation-button";
 
 interface RequestsTableProps{
     labId: string
@@ -34,7 +34,7 @@ export default async function RequestsTable(params: RequestsTableProps){
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div className="flex space-x-3">
-                <AppriveReservationButton/>
+                <ApproveReservationButton requestId={request.id} path={`/dashboard/lab-manager/${params.labId}/reservations`}/>
                   </div>
                 </td>
               </tr>

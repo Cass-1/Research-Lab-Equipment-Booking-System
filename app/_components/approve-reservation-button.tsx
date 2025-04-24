@@ -1,10 +1,11 @@
 "use client";
+import ApproveReservation from "../_server-actions/approve-reservation";
 import Button from "./button";
 
-export default function AppriveReservationButton(){
+export default function ApproveReservationButton(params: {requestId: string, path: string}){
     return (
         <>
-            <Button onClick={() =>{}}>Approve</Button>
+            <Button onClick={async () => {ApproveReservation(params.requestId, params.path)}}>Approve</Button>
         </>
     );
 }
