@@ -71,7 +71,7 @@ export default async function LabPage({ params }: { params: Promise<{ labId: str
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {lab.equipment.map((item) => (
-              <EquipmentCard key={item.id} labName={lab.name} equipmentId={item.id} equipmentName={item.name}/>
+              <EquipmentCard key={item.id} labName={lab.name} equipmentId={item.id} equipmentName={item.name} labId={labId}/>
             ))}
           </div>
         )}z

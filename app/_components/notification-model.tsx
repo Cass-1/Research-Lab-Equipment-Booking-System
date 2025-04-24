@@ -5,7 +5,7 @@ interface ModalProps {
     onClose: () => void;
     children: React.ReactNode;
   }
-export default function Modal(params: ModalProps){
+export default function NotificationModal(params: ModalProps){
     const {isOpen, onClose, children} = params;
 
     if (!isOpen){
@@ -18,7 +18,7 @@ export default function Modal(params: ModalProps){
   <div className="fixed inset-0 bg-gray-100 bg-opacity-50"></div>
   
   {/* Modal */}
-  <div className="bg-gray-100 rounded-lg shadow-xl p-6 mx-4 max-w-md w-full relative">
+  <div className="bg-transparent rounded-lg shadow-xl p-6 mx-4 max-w-md w-full relative">
     {/* This is where you render the children prop */}
     {children}
     

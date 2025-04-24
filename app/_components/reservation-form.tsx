@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import createReservation from "../_server-actions/create-reservation";
-import AlertModal from "./modal-alert";
+import NotificationModal from "./notification-model";
 
-export default function CreateReservation(params: {equipmentId: string, userId: string}){
+export default function CreateReservation(params: {equipmentId: string, userId: string, labId: string}){
     const [showModal, setShowModal] = useState(false);
 
     async function handleFormSubmission(formData: FormData){
@@ -23,8 +23,9 @@ export default function CreateReservation(params: {equipmentId: string, userId: 
         <input name="approved" type="hidden" value="false"/>
         <input name="userId" type="hidden" value={params.userId}/>
         <input name="date" required={true} type="date"/>
+        <input name="labId" type="hidden" value={params.labId}/>
         <button type="submit">Submit</button>
     </form>
-    <AlertModal isOpen={showModal} onClose={() => {setShowModal(false)}}>A reservation for that day already exists</AlertModal>
+    <NotificationModal isOpen={showModal} onClose={() => {setShowModal(false)}}>A reservation for that day already exists</NotificationModal>
     </>);
 }

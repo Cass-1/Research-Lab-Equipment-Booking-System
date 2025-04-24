@@ -70,15 +70,16 @@ enum Role {
 }
 
 model Lab {
-  id             String      @id @default(cuid())
+  id             String         @id @default(cuid())
   name           String
   description    String?
   imageUrl       String?
-  equipmentCount Int?        @default(0)
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  equipmentCount Int?           @default(0)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   users          UserLab[]
   equipment      Equipment[]
+  Reservations   Reservations[]
 }
 
 model UserLab {
@@ -108,4 +109,6 @@ model Reservations {
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   date        DateTime
   approved    Boolean
+  labId       String
+  lab         Lab       @relation(fields: [labId], references: [id], onDelete: Cascade)
 }

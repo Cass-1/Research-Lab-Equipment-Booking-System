@@ -78,13 +78,19 @@ export default async function AdminLabsPage() {
                       href={`/dashboard/lab-manager/${lab.id}/manage`} 
                       className="text-blue-600 hover:text-blue-900"
                     >
-                      Manage
+                      Users
                     </Link>
                     <Link
                       href={`/dashboard/lab-manager/${lab.id}/equipment`} 
                       className="text-blue-600 hover:text-blue-900"
                     >
-                      Manage Equipment
+                      Equipment
+                    </Link>
+                    <Link
+                      href={`/dashboard/lab-manager/${lab.id}/reservations`} 
+                      className="text-blue-600 hover:text-blue-900"
+                    >
+                      Reservations
                     </Link>
                     <Link 
                       href={`/dashboard/lab-manager/${lab.id}/delete`}
