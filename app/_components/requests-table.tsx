@@ -10,7 +10,7 @@ import ApproveReservation from "../_server-actions/approve-reservation";
 
 interface RequestsTableProps{
     labId: string,
-    data: Reservations[]
+    data: any[]
 }
 
 export default function ReservationsTable(params: RequestsTableProps){
