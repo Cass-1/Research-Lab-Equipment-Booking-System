@@ -1,29 +1,23 @@
 "use client";
 import Td from "./td";
 import Th from "./th"
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Button from "./button";
 import SetReservationStatus from "../_server-actions/set-reservation-status";
-import { ReservationStatus } from "@prisma/client";
 
-interface RequestsTableProps{
-    data: any[],
-    status: ReservationStatus
+interface UserRequestsTableProps{
+    userId: string,
+    data: any[]
 }
 
-export default function ReservationsTable(params: RequestsTableProps){
+export default function UserReservationsTable(params: UserRequestsTableProps){
   const columnNames = ["Equipment", "User", "Day"];
   const [deletedIds, setDeletedIds] = useState<string[]>([]);
-  const [reservationStatus, setReservationStatus] = useState<ReservationStatus>(ReservationStatus.APPROVED);
-
-  useEffect(()=> {
-    setReservationStatus(params.status);
-  }, [params.status]);
 
   const items = params.data.filter(x => !deletedIds.includes(x.id));
   async function handleButtonClick(reservationId: string){
     setDeletedIds([...deletedIds, reservationId]);
-    await SetReservationStatus(reservationId, reservationStatus === reser);
+    await SetReservationStatus(reservationId, false);
   }
 
 
@@ -42,7 +36,7 @@ export default function ReservationsTable(params: RequestsTableProps){
             {items.map((item) => (
               <tr key={item.id} className="hover:bg-gray-50">
                 <Td>{item.equipment.name}</Td>
-                <Td>{item.user.name}</Td>
+                <Td>{item.lab.name}</Td>
                 <Td>{item.date.toString()}</Td>
                 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -50,7 +44,7 @@ export default function ReservationsTable(params: RequestsTableProps){
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div className="flex space-x-3">
                 <Button onClick={() => {handleButtonClick(item.id)}}>
-                  {reservationStatus}
+                  Cancel
                 </Button>
                   </div>
                 </td>

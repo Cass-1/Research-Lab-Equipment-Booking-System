@@ -69,6 +69,14 @@ enum Role {
   LAB_MANAGER
 }
 
+enum ReservationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+
+  @@map("ApprovalStatus")
+}
+
 model Lab {
   id             String         @id @default(cuid())
   name           String
@@ -102,13 +110,13 @@ model Equipment {
 }
 
 model Reservations {
-  id          String    @id @default(cuid())
+  id          String            @id @default(cuid())
   equipmentId String
-  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+  equipment   Equipment         @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
   userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   date        DateTime
-  approved    Boolean
+  approved    ReservationStatus
   labId       String
-  lab         Lab       @relation(fields: [labId], references: [id], onDelete: Cascade)
+  lab         Lab               @relation(fields: [labId], references: [id], onDelete: Cascade)
 }

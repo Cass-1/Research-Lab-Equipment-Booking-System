@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import Button from "./button";
 import GetReservations from "../_server-actions/get-registrations";
 import ReservationsTable from "./reservations-table";
+import { ReservationStatus } from "@prisma/client";
+import SetReservationStatus from "../_server-actions/set-reservation-status";
 
 export default function ReservationsTables(params: {labId: string}){
-    const [showApproved, setShowApproved] = useState(false)
+    const [approvalStatus, setApprovalStatus] = useState<ReservationStatus>(ReservationStatus.PENDING);
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -14,8 +16,7 @@ export default function ReservationsTables(params: {labId: string}){
         async function loadInitialData() {
             setLoading(true);
             try {
-                const reservations = await GetReservations(params.labId, showApproved, !showApproved);
-                console.log(`reservations are ${reservations[0].equipment}`)
+                const reservations = await GetReservations(params.labId, approvalStatus);
                 setItems(reservations);
             } catch (error) {
                 console.error("Failed to load reservations:", error);
@@ -25,15 +26,16 @@ export default function ReservationsTables(params: {labId: string}){
         }
         
         loadInitialData();
-    }, [params.labId]);
+    }, [params.labId, approvalStatus]);
 
     async function handleButtonClick(){
         setLoading(true);
-        const newApprovalView = !showApproved;
-        setShowApproved(newApprovalView);
+        const newApprovalView = approvalStatus === ReservationStatus.PENDING ? ReservationStatus.APPROVED : ReservationStatus.PENDING;
+        setApprovalStatus(newApprovalView);
+        console.log(`the approval status is: ${approvalStatus}`)
         
         try {
-            const reservations = await GetReservations(params.labId, newApprovalView, !newApprovalView);
+            const reservations = await GetReservations(params.labId,approvalStatus);
             setItems(reservations);
         } catch (error) {
             console.error("Failed to load reservations:", error);
@@ -44,15 +46,15 @@ export default function ReservationsTables(params: {labId: string}){
 
     return (
         <>
-        <h1>{showApproved ? "Approved Reservations" : "Pending Reservations"}</h1>
+        <h1>{approvalStatus === ReservationStatus.APPROVED ? "Approved Reservations" : "Pending Reservations"}</h1>
             <Button onClick={handleButtonClick} disabled={loading}>
-                {showApproved ? "View Pending Approval":"View Approved"}
+                {approvalStatus === ReservationStatus.APPROVED ? "View Approved":"View Pending Approval"}
             </Button>
             
             {loading ? (
                 <div className="text-center py-4">Loading reservations...</div>
             ) : items.length > 0 ? (
-                <ReservationsTable labId={params.labId} data={items} approve={showApproved}/>
+                <ReservationsTable data={items} status={approvalStatus}/>
             ) : (
                 <div className="text-center py-4">No reservations found.</div>
             )}

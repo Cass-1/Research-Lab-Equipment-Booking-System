@@ -1,11 +1,12 @@
 "use server";
 
+import { ReservationStatus } from "@prisma/client";
 import { prisma } from "../_lib/prisma";
 type EquipmentFormData = {
     equipmentId: string,
     userId: string,
     date: Date,
-    approved: boolean,
+    approved: ReservationStatus,
     labId: string
 }
 export default async function CreateReservation(formData: FormData): Promise<boolean>{
@@ -13,7 +14,7 @@ export default async function CreateReservation(formData: FormData): Promise<boo
         equipmentId: formData.get("equipmentId")!.toString(),
         userId: formData.get("userId") as string,
         date: new Date(formData.get("date")!.toString()),
-        approved: formData.get("approved")?.toString().toLocaleLowerCase() === "true",
+        approved: formData.get("approved") as ReservationStatus,
         labId: formData.get("labId")!.toString()
     }
     const previousReservations = await prisma.reservations.findMany({

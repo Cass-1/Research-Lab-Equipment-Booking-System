@@ -1,11 +1,12 @@
 "use server";
+import { ReservationStatus } from "@prisma/client";
 import { prisma } from "../_lib/prisma";
 
-export default async function FindReservations(labId: string){
+export default async function FindPendingReservations(labId: string){
     return await prisma.reservations.findMany({
         where:{
           labId: labId,
-          approved: false
+          approved: ReservationStatus.PENDING
         },
         include:{
           user: true,
