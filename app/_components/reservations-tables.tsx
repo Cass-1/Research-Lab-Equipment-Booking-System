@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Button from "./button";
 import GetReservations from "../_server-actions/get-registrations";
-import ReservationsTable from "./requests-table";
+import ReservationsTable from "./reservations-table";
 
 export default function ReservationsTables(params: {labId: string}){
     const [showApproved, setShowApproved] = useState(false)

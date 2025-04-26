@@ -1,4 +1,4 @@
-import ReservationsTable from "@/app/_components/requests-table";
+import ReservationsTable from "@/app/_components/reservations-table";
 import ReservationsTables from "@/app/_components/reservations-tables";
 import { prisma } from "@/app/_lib/prisma";
 
