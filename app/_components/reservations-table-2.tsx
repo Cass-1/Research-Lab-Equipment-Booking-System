@@ -24,13 +24,11 @@ export default function ReservationsTable(params : ReservationsTableProps){
     const fetchReservations = async ()=>{
         setLoading(true);
         const reservations = await GetReservations(activeTab, params.specificUser);
-        console.log(reservations.length);
         setReservations(reservations);
         setLoading(false);
     }
 
     const handleTabChange = async (newValue: ReservationStatus) => {
-        console.log(`new value: ${newValue}`);
         setActiveTab(newValue);
         setSelectedReservations([]);
     }
@@ -45,6 +43,7 @@ export default function ReservationsTable(params : ReservationsTableProps){
     }
 
     const handleStatusChange = async (status: ReservationStatus) => {
+        console.log(`reservation length ${selectedReservations.length} `);
         await UpdateReservationStatus(status, selectedReservations);
         console.log("test")
         setSelectedReservations([]);
