@@ -20,11 +20,12 @@ export async function PUT(
 
   try {
     const { role } = await req.json();
+    const validRole = role as Role;
 
     const updatedUser = await prisma.user.update({
 
       where: { id: userId },
-      data: { role },
+      data: { role: validRole },
     });
     // Update the user's role in the lab
     const updatedUserLab = await prisma.userLab.update({
@@ -48,7 +49,8 @@ export async function PUT(
     });
 
     return NextResponse.json(updatedUserLab);
-  } catch {
+  } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { message: 'Error updating lab member' },
       { status: 500 }
@@ -59,9 +61,9 @@ export async function PUT(
 // Remove a member from a lab
 export async function DELETE(
   req: NextRequest,
-  context: { params: Promise<{ labId: string; userId: string }> }
+  context: { params: { labId: string; userId: string } }
 ) {
-  const { labId, userId } = await context.params;
+  const { labId, userId } = context.params;
   const session = await auth();
 
   // Check authorization
@@ -77,8 +79,8 @@ export async function DELETE(
     await prisma.userLab.delete({
       where: {
         userId_labId: {
-          userId,
-          labId,
+          userId: userId,
+          labId: labId
         }
       }
     });
@@ -86,7 +88,7 @@ export async function DELETE(
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json(
-      { message: 'Error removing lab member' },
+      { message: `Error removing lab member` },
       { status: 500 }
     );
   }

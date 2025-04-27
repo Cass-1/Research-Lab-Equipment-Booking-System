@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Role } from '@prisma/client';
 
 type UserLab = {
   userId: string;
@@ -25,8 +26,6 @@ type Lab = {
 };
 
 export default function ManageLabMembersPage({labId}: { labId: string }) {
-    console.log("the labid: " + labId);
-  
   const [lab, setLab] = useState<Lab | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -259,9 +258,9 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
                     onChange={(e) => handleUpdateRole(userLab.userId, e.target.value)}
                     className="rounded-md border border-gray-300 py-1 px-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
                   >
-                    <option value="MEMBER">Member</option>
-                    <option value="PI">Principal Investigator</option>
-                    <option value="ADMIN">Admin</option>
+                    <option value="USER">{Role.USER}</option>
+                    <option value="LAB_MANAGER">{Role.LAB_MANAGER}</option>
+                    <option value="ADMIN">{Role.ADMIN}</option>
                   </select>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
