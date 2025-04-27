@@ -9,7 +9,7 @@ export default async function SetReservationStatus(reservationId: string, approv
             id: reservationId
         },
         data: {
-            approved: approvalStatus
+            status: approvalStatus
         }
     })
 }

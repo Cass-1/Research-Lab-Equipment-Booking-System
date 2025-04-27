@@ -21,7 +21,7 @@ export default function CreateReservation(params: {equipmentId: string, userId: 
         <>
     <form action={handleFormSubmission}>
         <input name="equipmentId" type="hidden" value={params.equipmentId}/>
-        <input name="approved" type="hidden" value={ReservationStatus.PENDING}/>
+        <input name="status" type="hidden" value={ReservationStatus.PENDING}/>
         <input name="userId" type="hidden" value={params.userId}/>
         <input name="date" required={true} type="date"/>
         <input name="labId" type="hidden" value={params.labId}/>

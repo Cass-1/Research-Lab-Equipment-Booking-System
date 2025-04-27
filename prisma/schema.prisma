@@ -65,7 +65,6 @@ model VerificationToken {
 enum Role {
   USER
   ADMIN
-  TEACHER
   LAB_MANAGER
 }
 
@@ -104,7 +103,6 @@ model Equipment {
   name         String
   description  String?
   labId        String
-  quantity     Int
   lab          Lab            @relation(fields: [labId], references: [id], onDelete: Cascade)
   Reservations Reservations[]
 }
@@ -116,7 +114,7 @@ model Reservations {
   userId      String
   user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   date        DateTime
-  approved    ReservationStatus
+  status      ReservationStatus
   labId       String
   lab         Lab               @relation(fields: [labId], references: [id], onDelete: Cascade)
 }

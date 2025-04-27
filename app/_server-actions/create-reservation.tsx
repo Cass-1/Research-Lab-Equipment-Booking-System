@@ -6,7 +6,7 @@ type EquipmentFormData = {
     equipmentId: string,
     userId: string,
     date: Date,
-    approved: ReservationStatus,
+    status: ReservationStatus,
     labId: string
 }
 export default async function CreateReservation(formData: FormData): Promise<boolean>{
@@ -14,7 +14,7 @@ export default async function CreateReservation(formData: FormData): Promise<boo
         equipmentId: formData.get("equipmentId")!.toString(),
         userId: formData.get("userId") as string,
         date: new Date(formData.get("date")!.toString()),
-        approved: formData.get("approved") as ReservationStatus,
+        status: formData.get("status") as ReservationStatus,
         labId: formData.get("labId")!.toString()
     }
     const previousReservations = await prisma.reservations.findMany({
@@ -31,7 +31,7 @@ export default async function CreateReservation(formData: FormData): Promise<boo
                 equipmentId: rawData.equipmentId,
                 userId: rawData.userId,
                 date: rawData.date,
-                approved: rawData.approved,
+                status: rawData.status,
                 labId: rawData.labId
             },
         });

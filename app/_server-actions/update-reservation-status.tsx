@@ -9,7 +9,7 @@ export default async function UpdateReservationStatus(activeTab: ReservationStat
             id: {in: reservationIds}
         },
         data:{
-            approved: activeTab
+            status: activeTab
         }
     });
 }

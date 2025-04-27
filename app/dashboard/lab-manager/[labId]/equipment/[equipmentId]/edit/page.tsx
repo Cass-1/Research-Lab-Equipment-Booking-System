@@ -22,13 +22,11 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
   async function handleEditEquipment(formData: FormData) {
     "use server";
     const name = formData.get('name') as string;
-    const quantity = parseInt(formData.get('quantity') as string, 10);
 
     await prisma.equipment.update({
       where: { id: equipmentId },
       data: {
-        name,
-        quantity,
+        name
       },
     });
 
@@ -52,17 +50,6 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
-          Quantity
-        </label>
-        <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          defaultValue={equipment.quantity}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          required
-        />
       </div>
       <button
         type="submit"
