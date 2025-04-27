@@ -142,7 +142,7 @@ export default function ReservationsTable(params : ReservationsTableProps){
                                     />
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    {new Date(x.date).toLocaleDateString()}
+                                    {`${x.date.getUTCMonth()}/${x.date.getUTCDate()}/${x.date.getUTCFullYear()}`}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     {x.lab.name}

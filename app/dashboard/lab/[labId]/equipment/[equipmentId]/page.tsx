@@ -6,11 +6,8 @@ export default async function Page({ params }: { params: Promise<{labId: string,
     const {equipmentId, labId} = await params;
     const session= await auth();
 
-    // function 
-
     return (
     <>
-        <span>{equipmentId}</span>
         <ReservationForm equipmentId={equipmentId} userId={session?.user.id} labId={labId} />
     </>);
 }
