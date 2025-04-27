@@ -1,29 +1,11 @@
-import { auth } from '@/auth';
-import { prisma, Role } from '@/app/_lib/prisma';
-import { redirect } from 'next/navigation';
+import { prisma } from '@/app/_lib/prisma';
+import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
-export default async function AdminLabsPage() {
-  const session = await auth();
-  
-  // Check if user is authenticated and has admin role
-  if (!session?.user) {
-    redirect('/dashboard');
-  }
+export default async  function AdminDashboardPage() {{
   
   // Fetch all labs with their member counts
   const labs = await prisma.lab.findMany({
-    where: {
-      users: {
-        some: {
-          userId: session.user.id,
-          user: {
-            role: Role.LAB_MANAGER
-          }
-        }
-      }
-    },
     include: {
       _count: {
         select: { users: true, equipment: true }
@@ -118,4 +100,4 @@ export default async function AdminLabsPage() {
       </div>
     </div>
   );
-}
+}}

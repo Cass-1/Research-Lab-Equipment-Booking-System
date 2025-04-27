@@ -29,12 +29,6 @@ export default auth(async (req) => {
             return NextResponse.redirect(new URL("/permission-denied", nextUrl));
         }
 
-        const teacherRoutes = ["/dashboard/teacher"];
-        const teacherRoles = [Role.TEACHER, Role.ADMIN];
-        if (teacherRoutes.some(route => reqPath.includes(route)) && !teacherRoles.includes(userRole)) {
-            return NextResponse.redirect(new URL("/permission-denied", nextUrl));
-        }
-
         const labManagerRoutes = ["/dashboard/lab-manager"];
         const labManagerRoles = [Role.LAB_MANAGER, Role.ADMIN];
         if (labManagerRoutes.some(route => reqPath.includes(route)) && !labManagerRoles.includes(userRole)) {
