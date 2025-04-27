@@ -196,9 +196,8 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
               onChange={(e) => setNewUserRole(e.target.value)}
               className="w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
             >
-              <option value="MEMBER">Member</option>
-              <option value="PI">Principal Investigator</option>
-              <option value="ADMIN">Admin</option>
+            <option value="USER">{Role.USER}</option>
+            <option value="LAB_MANAGER">{Role.LAB_MANAGER}</option>
             </select>
           </div>
           <div className="self-end">
@@ -260,7 +259,6 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
                   >
                     <option value="USER">{Role.USER}</option>
                     <option value="LAB_MANAGER">{Role.LAB_MANAGER}</option>
-                    <option value="ADMIN">{Role.ADMIN}</option>
                   </select>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

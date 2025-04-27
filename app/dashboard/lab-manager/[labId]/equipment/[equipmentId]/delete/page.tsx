@@ -6,7 +6,7 @@ export default async function DeleteEquipmentPage({ params }: { params: Promise<
   const session = await auth();
   const { labId, equipmentId } = await params;
   // Check if user is authenticated and has admin role
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user) {
     redirect('/dashboard');
   }
 

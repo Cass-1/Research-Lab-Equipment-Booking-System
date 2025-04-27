@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma, Role } from '@/app/_lib/prisma';
+import { prisma } from '@/app/_lib/prisma';
 import { auth } from '@/auth';
 
 // Add a member to a lab
@@ -11,7 +11,7 @@ export async function POST(
   const session = await auth();
 
   // Check authorization
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }

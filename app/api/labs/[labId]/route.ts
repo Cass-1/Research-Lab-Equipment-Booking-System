@@ -54,7 +54,7 @@ export async function PUT(
   const session = await auth();
 
   // Check authorization
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
@@ -100,7 +100,7 @@ export async function DELETE(
   const session = await auth();
 
   // Check authorization
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }

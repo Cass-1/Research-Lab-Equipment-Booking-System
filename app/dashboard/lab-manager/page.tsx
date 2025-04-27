@@ -36,13 +36,6 @@ export default async function AdminLabsPage() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Lab Management</h1>
-        <Link 
-          href="/dashboard/lab-manager/create" 
-          className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-        >
-          <PlusIcon className="w-5 h-5 mr-2" />
-          Create New Lab
-        </Link>
       </div>
       
       <div className="bg-white rounded-lg shadow overflow-hidden">

@@ -7,7 +7,7 @@ export default async function EditEquipmentPage({ params }: { params: Promise<{ 
   const { labId, equipmentId } = await params;
   console.log("lab id: " + labId + " equipment id: " +  equipmentId);
   // Check if user is authenticated and has admin role
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user ) {
     redirect('/dashboard');
   }
 

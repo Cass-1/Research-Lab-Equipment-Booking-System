@@ -29,7 +29,7 @@ export default auth(async (req) => {
             return NextResponse.redirect(new URL("/permission-denied", nextUrl));
         }
 
-        const labManagerRoutes = ["/dashboard/lab-manager"];
+        const labManagerRoutes = ["/dashboard/lab-manager", "/api"];
         const labManagerRoles = [Role.LAB_MANAGER, Role.ADMIN];
         if (labManagerRoutes.some(route => reqPath.includes(route)) && !labManagerRoles.includes(userRole)) {
             return NextResponse.redirect(new URL("/permission-denied", nextUrl));
