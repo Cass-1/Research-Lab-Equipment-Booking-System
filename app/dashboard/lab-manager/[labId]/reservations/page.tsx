@@ -5,7 +5,7 @@ export default async function Page({params}: {params: Promise<{labId: string}>})
     const {labId} = await params;
     return (
         <>
-            <ReservationsTable availableActions={[ReservationStatus.APPROVED, ReservationStatus.REJECTED]} defaultTab={ReservationStatus.PENDING} showTabs={true}/>
+            <ReservationsTable availableActions={[ReservationStatus.APPROVED, ReservationStatus.REJECTED]} defaultTab={ReservationStatus.PENDING} showTabs={true} specificLab={labId}/>
         </>
     )
 }
