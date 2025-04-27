@@ -1,11 +1,11 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -21,8 +21,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -44,11 +43,13 @@ model User {
   email         String?        @unique
   emailVerified DateTime?      @map("email_verified")
   image         String?
+  role          Role           @default(USER)
+  Reservations  Reservations[]
+  approvedLogs  UsageLog[]     @relation("ApprovedByUser")
+  requestedLogs UsageLog[]     @relation("RequestedByUser")
+  labs          UserLab[]
   accounts      Account[]
   sessions      Session[]
-  role          Role           @default(USER)
-  labs          UserLab[]
-  Reservations  Reservations[]
 
   @@map("users")
 }
@@ -62,21 +63,6 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
-enum Role {
-  USER
-  ADMIN
-  TEACHER
-  LAB_MANAGER
-}
-
-enum ReservationStatus {
-  PENDING
-  APPROVED
-  REJECTED
-
-  @@map("ApprovalStatus")
-}
-
 model Lab {
   id             String         @id @default(cuid())
   name           String
@@ -85,16 +71,17 @@ model Lab {
   equipmentCount Int?           @default(0)
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
-  users          UserLab[]
   equipment      Equipment[]
   Reservations   Reservations[]
+  usageLogs      UsageLog[]
+  users          UserLab[]
 }
 
 model UserLab {
   userId String
   labId  String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   lab    Lab    @relation(fields: [labId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, labId])
 }
@@ -104,19 +91,50 @@ model Equipment {
   name         String
   description  String?
   labId        String
-  quantity     Int
   lab          Lab            @relation(fields: [labId], references: [id], onDelete: Cascade)
   Reservations Reservations[]
+  usageLogs    UsageLog[]
 }
 
 model Reservations {
   id          String            @id @default(cuid())
   equipmentId String
-  equipment   Equipment         @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
   userId      String
-  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   date        DateTime
-  approved    ReservationStatus
   labId       String
+  status      ReservationStatus
+  equipment   Equipment         @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
   lab         Lab               @relation(fields: [labId], references: [id], onDelete: Cascade)
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  usageLog    UsageLog?
+}
+
+model UsageLog {
+  id            String            @id @default(cuid())
+  equipmentId   String
+  labId         String
+  reservationId String            @unique
+  requestedById String
+  approvedById  String
+  status        ReservationStatus
+  timestamp     DateTime          @default(now())
+  approvedBy    User              @relation("ApprovedByUser", fields: [approvedById], references: [id])
+  equipment     Equipment         @relation(fields: [equipmentId], references: [id])
+  lab           Lab               @relation(fields: [labId], references: [id])
+  requestedBy   User              @relation("RequestedByUser", fields: [requestedById], references: [id])
+  reservation   Reservations      @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  USER
+  ADMIN
+  LAB_MANAGER
+}
+
+enum ReservationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+
+  @@map("ApprovalStatus")
 }

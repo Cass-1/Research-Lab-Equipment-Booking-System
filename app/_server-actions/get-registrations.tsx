@@ -6,7 +6,6 @@ export default async function GetReservations(labId: string, approvalStatus: Res
         return await prisma.reservations.findMany({
             where:{
                 labId: labId,
-                approved: approvalStatus
             },
             include:{
                 equipment: true,

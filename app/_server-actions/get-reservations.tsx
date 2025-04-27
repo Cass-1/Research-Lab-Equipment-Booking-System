@@ -22,7 +22,6 @@ export type ReservationWithForeignKeys = Prisma.ReservationsGetPayload<{
 export default async function GetReservations(activeTab: ReservationStatus, specificUser?: string, specificLab?:string): Promise<ReservationWithForeignKeys[]>{
     return await prisma.reservations.findMany({
         where: {
-            approved: activeTab,
             ...(specificUser ? {userId: specificUser}:{}),
             ...(specificLab ? {labId: specificLab}:{})
         },

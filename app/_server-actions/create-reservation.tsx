@@ -2,41 +2,43 @@
 
 import { ReservationStatus } from "@prisma/client";
 import { prisma } from "../_lib/prisma";
+
 type EquipmentFormData = {
     equipmentId: string,
     userId: string,
     date: Date,
-    approved: ReservationStatus,
-    labId: string
-}
-export default async function CreateReservation(formData: FormData): Promise<boolean>{
+    labId: string,
+    status: ReservationStatus
+};
+
+export default async function CreateReservation(formData: FormData): Promise<boolean> {
     const rawData: EquipmentFormData = {
         equipmentId: formData.get("equipmentId")!.toString(),
         userId: formData.get("userId") as string,
         date: new Date(formData.get("date")!.toString()),
-        approved: formData.get("approved") as ReservationStatus,
-        labId: formData.get("labId")!.toString()
-    }
+        labId: formData.get("labId")!.toString(),
+        status: ReservationStatus.PENDING // Default status
+    };
+
     const previousReservations = await prisma.reservations.findMany({
-        where:{
+        where: {
             equipmentId: rawData.equipmentId,
             date: rawData.date
         }
-    })
-    if (previousReservations.length > 0 ){
+    });
+
+    if (previousReservations.length > 0) {
         return false;
-    }else{
+    } else {
         await prisma.reservations.create({
             data: {
                 equipmentId: rawData.equipmentId,
                 userId: rawData.userId,
                 date: rawData.date,
-                approved: rawData.approved,
-                labId: rawData.labId
+                labId: rawData.labId,
+                status: rawData.status // Include status
             },
         });
         return true;
     }
-    
-
 }

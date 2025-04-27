@@ -6,7 +6,6 @@ export default async function FindPendingReservations(labId: string){
     return await prisma.reservations.findMany({
         where:{
           labId: labId,
-          approved: ReservationStatus.PENDING
         },
         include:{
           user: true,
