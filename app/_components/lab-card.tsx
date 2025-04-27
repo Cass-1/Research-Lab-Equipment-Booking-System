@@ -9,7 +9,7 @@ interface LabCardProps {
 
 export default function LabCard({ lab, role }: LabCardProps) {
   return (
-    <Link href={`/lab/${lab.id}`}>
+    <Link href={`/dashboard/lab/${lab.id}`}>
       <div className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
         {/* Card Header/Lab Image */}
         <div className="w-full h-40 bg-blue-600 relative">

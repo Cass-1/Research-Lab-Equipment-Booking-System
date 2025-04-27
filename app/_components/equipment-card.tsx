@@ -9,7 +9,7 @@ interface EquipmentCardProps {
 
 export default function EquipmentCard({  equipmentName, equipmentId, labName, labId }: EquipmentCardProps) {
   return (
-    <Link href={`/lab/${labId}/equipment/${equipmentId}`}>
+    <Link href={`/dashboard/lab/${labId}/equipment/${equipmentId}`}>
       <div className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
         {/* Card Header/Lab Image */}
         <div className="w-full h-40 bg-blue-600 relative">

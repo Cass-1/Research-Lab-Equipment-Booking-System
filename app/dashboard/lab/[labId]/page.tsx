@@ -56,7 +56,7 @@ export default async function LabPage({ params }: { params: Promise<{ labId: str
       {/* Add Members Button for Admins */}
       {session?.user?.role === Role.LAB_MANAGER && (
         <div className="mb-8">
-          <Link href={`/lab/${labId}/add-members`}>
+          <Link href={`dashboard/lab/${labId}/add-members`}>
             <button className="bg-green-600 text-white px-4 py-2 rounded">
               Add Members
             </button>
@@ -74,7 +74,7 @@ export default async function LabPage({ params }: { params: Promise<{ labId: str
               <EquipmentCard key={item.id} labName={lab.name} equipmentId={item.id} equipmentName={item.name} labId={labId}/>
             ))}
           </div>
-        )}z
+        )}
       </div>
       
       <div>
