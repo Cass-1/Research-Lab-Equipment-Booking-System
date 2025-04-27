@@ -1,36 +1,39 @@
 "use client";
-import { Reservations, ReservationStatus } from "@prisma/client";
+import { ReservationStatus } from "@prisma/client";
 import { useEffect, useState } from "react";
-import GetReservations from "../_server-actions/get-reservations";
+import GetReservations, { ReservationWithForeignKeys } from "../_server-actions/get-reservations";
 import UpdateReservationStatus from "../_server-actions/update-reservation-status";
 
 interface ReservationsTableProps{
     defaultTab: ReservationStatus,
     showTabs: boolean,
     availableActions: ReservationStatus[],
-    specificUser?: string
+    specificUser?: string,
+    specificLab?: string
 }
 export default function ReservationsTable(params : ReservationsTableProps){
 
-    const [reservations, setReservations] = useState<Reservations[]>([]);
+    const [reservations, setReservations] = useState<ReservationWithForeignKeys[]>([]);
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState<ReservationStatus>(params.defaultTab);
     const [selectedReservations, setSelectedReservations] = useState<string[]>([]);
 
     useEffect(() => {
         fetchReservations();
-    }, [activeTab])
+    },[activeTab])
 
     const fetchReservations = async ()=>{
         setLoading(true);
-        const reservations = await GetReservations(activeTab, params.specificUser);
+        const reservations: ReservationWithForeignKeys[] = await GetReservations(activeTab, params.specificUser, params.specificLab);
         setReservations(reservations);
         setLoading(false);
     }
 
     const handleTabChange = async (newValue: ReservationStatus) => {
+        setLoading(true);
         setActiveTab(newValue);
         setSelectedReservations([]);
+        setLoading(false);
     }
 
     const toggleCheckbox = (reservationId: string) => {
@@ -66,7 +69,7 @@ export default function ReservationsTable(params : ReservationsTableProps){
                         disabled={selectedReservations.length === 0}
                         onClick={() => handleStatusChange(ReservationStatus.REJECTED)}
                     >
-                        Reject Selected
+                        Cancel Selected
                     </button>}
             </div>
         )
@@ -95,7 +98,7 @@ export default function ReservationsTable(params : ReservationsTableProps){
                                     ? 'border-b-2 border-blue-500 text-blue-600'
                                     : 'text-gray-500 hover:text-gray-700'
                             }`} onClick={() => handleTabChange(ReservationStatus.REJECTED)}>
-                Rejcected
+                Canceled
             </button>
                 </>}
             </div>
@@ -110,7 +113,8 @@ export default function ReservationsTable(params : ReservationsTableProps){
                         <tr>
                             <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase w-12"></th>
                             <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Date</th>
-                            {/* Add more headers as needed */}
+                            <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Lab</th>
+                            <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Equipment</th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -140,7 +144,12 @@ export default function ReservationsTable(params : ReservationsTableProps){
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     {new Date(x.date).toLocaleDateString()}
                                 </td>
-                                {/* Add more cells as needed */}
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    {x.lab.name}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    {x.equipment.name}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
