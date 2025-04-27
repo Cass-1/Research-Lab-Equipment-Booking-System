@@ -17,6 +17,20 @@ export async function PUT(
       { status: 403 }
     );
   }
+  // Check if user is admin
+  const isAdmin = await prisma.user.findUnique({
+    where: {
+      id: userId,
+      role: Role.ADMIN
+    }
+  });
+
+  if (isAdmin) {
+    return NextResponse.json(
+      { message: 'User is admin' },
+      { status: 400 }
+    );
+  }
 
   try {
     const { role } = await req.json();
@@ -71,6 +85,20 @@ export async function DELETE(
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
+    );
+  }
+  // Check if user is admin
+  const isAdmin = await prisma.user.findUnique({
+    where: {
+      id: userId,
+      role: Role.ADMIN
+    }
+  });
+
+  if (isAdmin) {
+    return NextResponse.json(
+      { message: 'User is admin' },
+      { status: 400 }
     );
   }
 

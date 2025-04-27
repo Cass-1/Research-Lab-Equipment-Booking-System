@@ -114,8 +114,11 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
     }
   };
   
-  const handleUpdateRole = async (userId: string, newRole: string) => {
+  const handleUpdateRole = async (userId: string, oldRole: string, newRole: string) => {
     try {
+      if (oldRole as Role === Role.ADMIN){
+        throw new Error("Can't change role of Admin");
+      }
       const response = await fetch(`/api/labs/${labId}/members/${userId}`, {
         method: 'PUT',
         headers: {
@@ -186,20 +189,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
               placeholder="user@example.com"
             />
           </div>
-          <div className="w-full md:w-1/4">
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
-              Role
-            </label>
-            <select
-              id="role"
-              value={newUserRole}
-              onChange={(e) => setNewUserRole(e.target.value)}
-              className="w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-            >
-            <option value="USER">{Role.USER}</option>
-            <option value="LAB_MANAGER">{Role.LAB_MANAGER}</option>
-            </select>
-          </div>
+        
           <div className="self-end">
             <button
               type="submit"
@@ -254,7 +244,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <select
                     value={userLab.role}
-                    onChange={(e) => handleUpdateRole(userLab.userId, e.target.value)}
+                    onChange={(e) => handleUpdateRole(userLab.userId, userLab.role, e.target.value)}
                     className="rounded-md border border-gray-300 py-1 px-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
                   >
                     <option value="USER">{Role.USER}</option>

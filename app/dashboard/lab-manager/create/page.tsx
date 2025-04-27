@@ -24,7 +24,7 @@ export default async function CreateLabPage() {
         });
 
         // Redirect back to the labs management page
-        redirect('/dashboard/lab-manager');
+        redirect('/dashboard/admin');
     }
 
     return (

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/app/_lib/prisma';
+import { prisma, Role } from '@/app/_lib/prisma';
 import { auth } from '@/auth';
 
 // Add a member to a lab
@@ -46,6 +46,21 @@ export async function POST(
     if (existingMember) {
       return NextResponse.json(
         { message: 'User is already a member of this lab' },
+        { status: 400 }
+      );
+    }
+
+    // Check if user is admin
+    const isAdmin = await prisma.user.findUnique({
+      where: {
+        id: user.id,
+        role: Role.ADMIN
+      }
+    });
+
+    if (isAdmin) {
+      return NextResponse.json(
+        { message: 'User is admin' },
         { status: 400 }
       );
     }
