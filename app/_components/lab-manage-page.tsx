@@ -25,7 +25,7 @@ type Lab = {
   users: UserLab[];
 };
 
-export default function ManageLabMembersPage({labId}: { labId: string }) {
+export default function ManageLabMembersPage(params: { labId: string, userRole: Role }) {
   const [lab, setLab] = useState<Lab | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +38,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
   useEffect(() => {
     const fetchLab = async () => {
       try {
-        const response = await fetch(`/api/labs/${labId}`);
+        const response = await fetch(`/api/labs/${params.labId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch lab data');
         }
@@ -53,14 +53,14 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
     };
     
     fetchLab();
-  }, [labId]);
+  }, [params.labId]);
 
   const handleAddMember = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsAdding(true);
     
     try {
-      const response = await fetch(`/api/labs/${labId}/members`, {
+      const response = await fetch(`/api/labs/${params.labId}/members`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
       }
       
       // Refresh lab data
-      const updatedLabResponse = await fetch(`/api/labs/${labId}`);
+      const updatedLabResponse = await fetch(`/api/labs/${params.labId}`);
       const updatedLab = await updatedLabResponse.json();
       setLab(updatedLab);
       
@@ -94,7 +94,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
     if (!confirm('Are you sure you want to remove this member?')) return;
     
     try {
-      const response = await fetch(`/api/labs/${labId}/members/${userId}`, {
+      const response = await fetch(`/api/labs/${params.labId}/members/${userId}`, {
         method: 'DELETE',
       });
       
@@ -119,7 +119,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
       if (oldRole as Role === Role.ADMIN){
         throw new Error("Can't change role of Admin");
       }
-      const response = await fetch(`/api/labs/${labId}/members/${userId}`, {
+      const response = await fetch(`/api/labs/${params.labId}/members/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Manage Lab Members: {lab.name}</h1>
         <Link
-          href="/dashboard/lab-manager"
+          href={params.userRole === Role.ADMIN ? "/dashboard/admin":`/dashboard/lab-manager`}
           className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           Back to Labs
