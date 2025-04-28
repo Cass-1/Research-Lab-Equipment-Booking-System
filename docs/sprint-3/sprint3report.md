@@ -19,11 +19,7 @@ This sprint primarily focused on implementing the booking system and its managem
   - We need to implement a dashboard to display the usage analytics on the app, and give the option for users to export the data from the app instead of having them do it through the database.
 
 ## Completed Issues/User Stories
-### Pull Requests
-Here are the major PR's
-  * [merges in the rbac branch](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/pull/49)
-  * [UI lab and equipment](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/pull/58)
-  * [Sprint 2 documentation](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/pull/62)
+
 ### Issues
 Here are links to the issues that we completed in this sprint:
  * [cannot delete lab member](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/65)
