@@ -27,16 +27,16 @@ Here are the major PR's
 ### Issues
 Here are links to the issues that we completed in this sprint:
  * [cannot delete lab member](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/65)
- * [google for auth] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/64)
- * [usage analytics] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/17)
- * [export booking data] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/18)
- * [remove admin from being able to see lab manager routes] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/44)
- * [prisma clean up] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/59)
- * [Booking system] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/16)
- * [time-slot validation] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/19)
- * [cleanup manager routes] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/63)
- * [security practices] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/45)
- * [be able to change user role] (https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/60)
+ * [google for auth](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/64)
+ * [usage analytics](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/17)
+ * [export booking data](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/18)
+ * [remove admin from being able to see lab manager routes](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/44)
+ * [prisma clean up](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/59)
+ * [Booking system](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/16)
+ * [time-slot validation](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/19)
+ * [cleanup manager routes](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/63)
+ * [security practices](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/45)
+ * [be able to change user role](https://github.com/Cass-1/Research-Lab-Equipment-Booking-System/issues/60)
  * 
  
  ## Incomplete Issues/User Stories
