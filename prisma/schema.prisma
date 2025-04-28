@@ -115,7 +115,6 @@ model Reservations {
   equipmentId String
   userId      String
   date        DateTime
-  approved    ReservationStatus
   labId       String
   status      ReservationStatus
   equipment   Equipment         @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
