@@ -75,9 +75,9 @@ export async function PUT(
 // Remove a member from a lab
 export async function DELETE(
   req: NextRequest,
-  context: { params: { labId: string; userId: string } }
+  { params }: { params: { labId: string; userId: string } }
 ) {
-  const { labId, userId } = context.params;
+  const { labId, userId } = params;
   const session = await auth();
 
   // Check authorization
