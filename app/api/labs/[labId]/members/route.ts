@@ -11,7 +11,7 @@ export async function POST(
   const session = await auth();
 
   // Check authorization
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
@@ -46,6 +46,21 @@ export async function POST(
     if (existingMember) {
       return NextResponse.json(
         { message: 'User is already a member of this lab' },
+        { status: 400 }
+      );
+    }
+
+    // Check if user is admin
+    const isAdmin = await prisma.user.findUnique({
+      where: {
+        id: user.id,
+        role: Role.ADMIN
+      }
+    });
+
+    if (isAdmin) {
+      return NextResponse.json(
+        { message: 'User is admin' },
         { status: 400 }
       );
     }

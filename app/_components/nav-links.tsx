@@ -2,9 +2,7 @@
 import {
     UserGroupIcon,
     HomeIcon,
-    DocumentDuplicateIcon,
     KeyIcon,
-    AcademicCapIcon,
     BeakerIcon
   } from '@heroicons/react/24/outline';
 import { Role } from '@/app/_lib/prisma';
@@ -29,10 +27,7 @@ export default function NavLinks() {
   if (session?.user.role === Role.ADMIN){
     links.push({name: 'Admin', href: '/dashboard/admin', icon: KeyIcon});
   }
-  if (session?.user.role === Role.TEACHER || session?.user.role === Role.ADMIN){
-    links.push({name: 'Teacher', href: `/dashboard/teacher`, icon: AcademicCapIcon});
-  }
-  if (session?.user.role === Role.LAB_MANAGER || session?.user.role === Role.ADMIN){
+  if (session?.user.role === Role.LAB_MANAGER){
     links.push({name: 'Lab Manager', href: `/dashboard/lab-manager`, icon: BeakerIcon});
   }
   return (

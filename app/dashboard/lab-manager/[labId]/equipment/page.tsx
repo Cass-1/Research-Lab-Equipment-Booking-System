@@ -8,7 +8,7 @@ export default async function LabEquipmentPage({ params }: { params: Promise<{ l
   const session = await auth();
   
   // Check if user is authenticated and has admin role
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user ) {
     redirect('/dashboard');
   }
 
@@ -44,9 +44,6 @@ export default async function LabEquipmentPage({ params }: { params: Promise<{ l
                 Equipment Name
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Quantity
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
@@ -56,9 +53,6 @@ export default async function LabEquipmentPage({ params }: { params: Promise<{ l
               <tr key={item.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">{item.name}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {item.quantity}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex space-x-3">

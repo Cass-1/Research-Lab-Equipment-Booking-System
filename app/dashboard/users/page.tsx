@@ -1,22 +1,12 @@
-import { prisma } from '@/app/_lib/prisma';
+import ReservationsTable from '@/app/_components/reservations-table-2';
 import { auth } from '@/auth';
-import Image from 'next/image';
+import { ReservationStatus } from '@prisma/client';
 
 export default async function Page() {
-  console.log('running user page');
   const session = await auth();
-  console.log('session', session);
-  const user = await prisma.user.findFirst({
-        where: {
-          email: session?.user.email,
-        },
-      });
-  console.log('user', user);
-  return (
-    <div>
-      <h1>Database Test</h1>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      <Image src={session?.user.image} alt='the user image' width={30} height={30}/>
-    </div>
+  return ( 
+    <>
+    <ReservationsTable defaultTab={ReservationStatus.PENDING} availableActions={[ReservationStatus.REJECTED]} showTabs={true} specificUser={session?.user.id}/>
+    </>
   );
 }

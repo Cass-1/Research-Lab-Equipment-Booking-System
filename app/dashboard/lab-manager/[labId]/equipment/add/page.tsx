@@ -9,7 +9,6 @@ export default function AddEquipmentPage() {
   const labId = params.labId; // Extract labId from params
 
   const [name, setName] = useState('');
-  const [quantity, setQuantity] = useState('');
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,8 +25,7 @@ export default function AddEquipmentPage() {
       },
       body: JSON.stringify({
         labId,
-        name,
-        quantity,
+        name
       }),
     });
 
@@ -55,17 +53,6 @@ export default function AddEquipmentPage() {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
-          Quantity
-        </label>
-        <input
-          type="number"
-          id="quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          required
-        />
       </div>
       <button
         type="submit"

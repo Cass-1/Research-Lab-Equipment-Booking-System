@@ -5,7 +5,7 @@ import { auth } from '@/auth';
 export async function POST(req: NextRequest) {
   // Check authentication and authorization
   const session = await auth();
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   // This endpoint would return all labs (for admin listing)
   const session = await auth();
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user) {
     return NextResponse.json(
       { message: 'Unauthorized' },
       { status: 403 }

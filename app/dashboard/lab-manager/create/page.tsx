@@ -6,7 +6,7 @@ export default async function CreateLabPage() {
     const session = await auth();
 
     // Check if the user is an admin
-    if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+    if (!session?.user ) {
         redirect('/dashboard');
     }
 
@@ -24,7 +24,7 @@ export default async function CreateLabPage() {
         });
 
         // Redirect back to the labs management page
-        redirect('/dashboard/lab-manager');
+        redirect('/dashboard/admin');
     }
 
     return (

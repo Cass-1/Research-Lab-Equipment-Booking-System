@@ -8,12 +8,22 @@ export default async function AdminLabsPage() {
   const session = await auth();
   
   // Check if user is authenticated and has admin role
-  if (!session?.user || session.user.role !== Role.LAB_MANAGER) {
+  if (!session?.user) {
     redirect('/dashboard');
   }
   
   // Fetch all labs with their member counts
   const labs = await prisma.lab.findMany({
+    where: {
+      users: {
+        some: {
+          userId: session.user.id,
+          user: {
+            role: Role.LAB_MANAGER
+          }
+        }
+      }
+    },
     include: {
       _count: {
         select: { users: true, equipment: true }
@@ -26,13 +36,6 @@ export default async function AdminLabsPage() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Lab Management</h1>
-        <Link 
-          href="/dashboard/lab-manager/create" 
-          className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-        >
-          <PlusIcon className="w-5 h-5 mr-2" />
-          Create New Lab
-        </Link>
       </div>
       
       <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -78,13 +81,19 @@ export default async function AdminLabsPage() {
                       href={`/dashboard/lab-manager/${lab.id}/manage`} 
                       className="text-blue-600 hover:text-blue-900"
                     >
-                      Manage
+                      Users
                     </Link>
                     <Link
                       href={`/dashboard/lab-manager/${lab.id}/equipment`} 
                       className="text-blue-600 hover:text-blue-900"
                     >
-                      Manage Equipment
+                      Equipment
+                    </Link>
+                    <Link
+                      href={`/dashboard/lab-manager/${lab.id}/reservations`} 
+                      className="text-blue-600 hover:text-blue-900"
+                    >
+                      Reservations
                     </Link>
                     <Link 
                       href={`/dashboard/lab-manager/${lab.id}/delete`}

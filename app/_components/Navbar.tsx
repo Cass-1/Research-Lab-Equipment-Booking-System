@@ -1,6 +1,7 @@
-import { auth, signOut, signIn } from "@/auth";
+import { auth, signOut } from "@/auth";
 import Link from "next/link";
 import Image from "next/image";
+import LoginForm from "./login-form";
 
 export default async function Navbar() {
   const session = await auth();
@@ -43,15 +44,7 @@ export default async function Navbar() {
             </>
           ) : (
             <>
-              <form
-                action={async () => {
-                  "use server";
-                  await signIn("github", {redirectTo: "/"});
-                }}
-                className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-              >
-                <button type="submit">Log In</button>
-              </form>
+              <LoginForm/>
             </>
           )}
         </div>

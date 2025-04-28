@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Role } from '@prisma/client';
 
 type UserLab = {
   userId: string;
@@ -24,9 +25,7 @@ type Lab = {
   users: UserLab[];
 };
 
-export default function ManageLabMembersPage({labId}: { labId: string }) {
-    console.log("the labid: " + labId);
-  
+export default function ManageLabMembersPage(params: { labId: string, userRole: Role }) {
   const [lab, setLab] = useState<Lab | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +38,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
   useEffect(() => {
     const fetchLab = async () => {
       try {
-        const response = await fetch(`/api/labs/${labId}`);
+        const response = await fetch(`/api/labs/${params.labId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch lab data');
         }
@@ -54,14 +53,14 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
     };
     
     fetchLab();
-  }, [labId]);
+  }, [params.labId]);
 
   const handleAddMember = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsAdding(true);
     
     try {
-      const response = await fetch(`/api/labs/${labId}/members`, {
+      const response = await fetch(`/api/labs/${params.labId}/members`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -78,7 +77,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
       }
       
       // Refresh lab data
-      const updatedLabResponse = await fetch(`/api/labs/${labId}`);
+      const updatedLabResponse = await fetch(`/api/labs/${params.labId}`);
       const updatedLab = await updatedLabResponse.json();
       setLab(updatedLab);
       
@@ -95,7 +94,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
     if (!confirm('Are you sure you want to remove this member?')) return;
     
     try {
-      const response = await fetch(`/api/labs/${labId}/members/${userId}`, {
+      const response = await fetch(`/api/labs/${params.labId}/members/${userId}`, {
         method: 'DELETE',
       });
       
@@ -115,9 +114,12 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
     }
   };
   
-  const handleUpdateRole = async (userId: string, newRole: string) => {
+  const handleUpdateRole = async (userId: string, oldRole: string, newRole: string) => {
     try {
-      const response = await fetch(`/api/labs/${labId}/members/${userId}`, {
+      if (oldRole as Role === Role.ADMIN){
+        throw new Error("Can't change role of Admin");
+      }
+      const response = await fetch(`/api/labs/${params.labId}/members/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -156,7 +158,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Manage Lab Members: {lab.name}</h1>
         <Link
-          href="/dashboard/lab-manager"
+          href={params.userRole === Role.ADMIN ? "/dashboard/admin":`/dashboard/lab-manager`}
           className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           Back to Labs
@@ -187,21 +189,7 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
               placeholder="user@example.com"
             />
           </div>
-          <div className="w-full md:w-1/4">
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
-              Role
-            </label>
-            <select
-              id="role"
-              value={newUserRole}
-              onChange={(e) => setNewUserRole(e.target.value)}
-              className="w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-            >
-              <option value="MEMBER">Member</option>
-              <option value="PI">Principal Investigator</option>
-              <option value="ADMIN">Admin</option>
-            </select>
-          </div>
+        
           <div className="self-end">
             <button
               type="submit"
@@ -256,12 +244,11 @@ export default function ManageLabMembersPage({labId}: { labId: string }) {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <select
                     value={userLab.role}
-                    onChange={(e) => handleUpdateRole(userLab.userId, e.target.value)}
+                    onChange={(e) => handleUpdateRole(userLab.userId, userLab.role, e.target.value)}
                     className="rounded-md border border-gray-300 py-1 px-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
                   >
-                    <option value="MEMBER">Member</option>
-                    <option value="PI">Principal Investigator</option>
-                    <option value="ADMIN">Admin</option>
+                    <option value="USER">{Role.USER}</option>
+                    <option value="LAB_MANAGER">{Role.LAB_MANAGER}</option>
                   </select>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
